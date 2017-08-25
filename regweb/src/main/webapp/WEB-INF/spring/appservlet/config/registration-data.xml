@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="
+                    http://www.springframework.org/schema/beans
+                    http://www.springframework.org/schema/beans/spring-beans.xsd
+                    http://www.springframework.org/schema/aop
+                    http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+   
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location">
+            <value>classpath:registration-config.properties</value>
+        </property>
+    </bean>
+    
+    <util:map id="feeMap">
+        <entry key="ADULTREGISTRATION1"    value="201612,2016-09-01T01:00:00Z,2016-11-15T00:00:00Z,18,0,ADULTREGISTRATION1,Early bird registration fee,USD,20.0"/>
+        <entry key="ADULTREGISTRATION2"    value="201612,2016-11-15T00:00:00Z,2016-11-29T00:00:00Z,18,0,ADULTREGISTRATION2,Regular registration fee,USD,40.0"/>
+        <entry key="ADULTREGISTRATION3"    value="201612,2016-11-29T00:00:00Z,2016-12-27T00:00:00Z,18,0,ADULTREGISTRATION3,Late registration,USD,60.0"/>
+        <entry key="LUNCH1"                value="201612,2016-09-01T01:00:00Z,2016-12-31T00:00:00Z,0,0,LUNCH1,Lunch Fee,USD,6.0"/>
+        <entry key="DINNER1"               value="201612,2016-09-01T01:00:00Z,2016-12-31T00:00:00Z,0,0,DINNER1,Dinner Fee,USD,9.0"/>
+        <entry key="NONADULTREGISTRATION1" value="201612,2016-09-01T01:00:00Z,2016-11-15T00:00:00Z,12,0,NONADULTREGISTRATION1,Early bird registration fee,USD,10.0"/>
+        <entry key="NONADULTREGISTRATION2" value="201612,2016-11-15T00:00:00Z,2016-11-29T00:00:00Z,12,0,NONADULTREGISTRATION2,Regular registration fee,USD,20.0"/>
+        <entry key="NONADULTREGISTRATION3" value="201612,2016-11-29T00:00:00Z,2016-12-27T00:00:00Z,12,0,NONADULTREGISTRATION3,Late registration,USD,30.0"/>
+        <entry key="BREAKFAST1"            value="201612,2016-09-01T01:00:00Z,2016-12-31T00:00:00Z,0,0,BREAKFAST1,Lunch Fee,USD,5.0"/>
+    </util:map>
+          
+    <bean id="paymentProvider" class="biz.cccm.registration.domain.PaymentProvider">
+        <property name="providerUrl" value="${providerUrl}" />
+        <property name="cmd" value="${redirect_cmd}" />
+        <property name="redirect_cmd" value="${redirect_cmd}" />
+        <property name="business" value="${business}" />
+        <property name="item_name" value="${item_name}"/>
+        <property name="no_shipping" value="${no_shipping}"/>
+        <property name="no_note" value="${no_note}"/>
+        <property name="currency_code" value="${currency_code}"/>
+        <property name="lc" value="${lc}"/>
+        <property name="bn" value="${bn}"/>
+        <property name="return" value="${return}"/>
+        <property name="notify_url" value="${notify_url}"/>
+        <property name="rm" value="${rm}"/>
+    </bean>
+    
+    <bean id="paymentCanadaProvider" class="biz.cccm.registration.domain.PaymentProvider">
+        <property name="providerUrl" value="${providerUrl}" />
+        <property name="cmd" value="${redirect_cmd}" />
+        <property name="redirect_cmd" value="${redirect_cmd}" />
+        <property name="business" value="${business_canada}" />
+        <property name="item_name" value="${item_name}"/>
+        <property name="no_shipping" value="${no_shipping}"/>
+        <property name="no_note" value="${no_note}"/>
+        <property name="currency_code" value="${currency_code_canada}"/>
+        <property name="lc" value="${lc_canada}"/>
+        <property name="bn" value="${bn}"/>
+        <property name="return" value="${return}"/>
+        <property name="notify_url" value="${notify_url}"/>
+        <property name="rm" value="${rm}"/>
+    </bean>
+    
+    <util:map id="paymentProviderMap" scope="prototype" map-class="java.util.HashMap" 
+              key-type="java.lang.String" value-type="biz.cccm.registration.domain.PaymentProvider">
+
+        <entry key="USD" value-ref="paymentProvider" />
+        <entry key="CAD" value-ref="paymentCanadaProvider" />
+    </util:map>
+    
+    <bean id="confirmationUrl" class="java.lang.String">
+        <constructor-arg value="${confirmationUrl}"/>
+    </bean>
+    
+    <bean id="confirmationAltUrl" class="java.lang.String">
+        <constructor-arg value="${confirmationAltUrl}"/>
+    </bean>
+    
+    <bean id="paypalUrl" class="java.lang.String">
+        <constructor-arg value="${paypalUrl}"/>
+    </bean>   
+        
+    <bean id="eventMailSubject" class="java.lang.String">
+        <constructor-arg value="${mail.event.subject}"/>
+    </bean> 
+    
+    <bean id="eventMailSender" class="java.lang.String">
+        <constructor-arg value="${mail.event.sender}"/>
+    </bean> 
+    
+    <bean id="eventMailTemplate" class="java.lang.String">
+        <constructor-arg value="${mail.event.template}"/>
+    </bean> 
+    
+    <bean id="directJdbcDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="${databaseDriverClassName}"/>
+        <property name="url" value="${databaseUrl}"/>
+        <property name="username" value="${databaseUserId}"/>
+        <property name="password" value="${databasePassword}"/>
+    </bean>
+    
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource">
+            <ref bean="directJdbcDataSource"/>
+        </property>
+    </bean>
+
+    <!-- =================================================================== -->
+    <!-- Mail: Sender and Velocity configuration                             -->
+    <!-- =================================================================== -->
+    <bean id="mailEngine" class="biz.cccm.registration.service.MailEngine">
+        <property name="mailSender" ref="mailSender"/>
+        <property name="velocityEngine" ref="velocityEngine"/>
+        <property name="from" value="${mail.default.from}"/>
+    </bean>
+
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="${mail.host}"/>
+        <property name="port" value="${mail.port}"/>
+        <property name="defaultEncoding" value="UTF-8"/> 
+        <!-- Uncomment if you need to authenticate with your SMTP Server -->
+        <property name="username" value="${mail.username}"/>
+        <property name="password" value="${mail.password}"/>
+        <property name="javaMailProperties">
+            <value>
+                mail.smtp.auth=true
+                mail.mime.charset=UTF-8
+            </value>
+        </property>
+    </bean>
+
+    <!-- Configure Velocity for sending e-mail -->
+    <bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+        <property name="velocityProperties">
+            <props>
+                <prop key="resource.loader">class</prop>
+                <prop key="class.resource.loader.class">
+                    org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+                </prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="mailMessage" class="org.springframework.mail.SimpleMailMessage" scope="prototype">
+        <property name="from" value="${mail.default.from}"/>
+    </bean>
+
+</beans>

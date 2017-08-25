@@ -1,0 +1,85 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/layouts/default.xhtml">
+        <ui:define name="title">#{text['paymentList.title']}</ui:define>
+
+        <ui:define name="body">
+            <div class="span10">
+                <h2>#{text['paymentList.heading']}</h2>
+
+                <h:form id="paymentForm" styleClass="form-search">
+                    <div id="search" class="input-append">
+                        <h:inputText id="q" size="20" value="#{paymentList.query}" styleClass="input-medium search-query"/>
+                        <h:commandButton styleClass="btn btn-default btn-sm" action="#{paymentList.search}" value="#{text['button.search']}"/>
+                    </div>
+                </h:form>
+
+                <h:form id="paymentList">
+
+                    <div id="actions" class="form-actions">
+                        <h:commandButton value="#{text['button.done']}" action="home" id="cancel"
+                                         immediate="true" styleClass="btn">
+                        </h:commandButton>
+                    </div>
+
+                    <p:dataTable id="messages" var="payment" value="#{paymentList.payments}" sortBy="#{paymentList.sortColumn}" paginator="true" rows="30" 
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="10,30,50">
+                        <p:column style="width: 5%">
+                            <f:facet name="header">
+                                <p:column sortBy="paymentId" >
+                                    <h:outputText value="#{text['payment.id']}" />
+                                </p:column>
+                            </f:facet>
+                            <h:commandLink action="#{paymentForm.edit}" value="#{payment.id}" >
+                                <f:param name="id" value="#{payment.id}"/>
+                            </h:commandLink>
+                        </p:column>
+                        <p:column style="width: 20%">
+                            <f:facet name="header">
+                                <p:column sortBy="paymentDate" >
+                                    <h:outputText value="#{text['payment.paymentDate']}" />
+                                </p:column>
+                            </f:facet>
+                            <h:outputText value="#{payment.paymentDate}" />
+                        </p:column>
+                        <p:column style="width: 34%">
+                            <f:facet name="header">
+                                <p:column sortBy="amount" >
+                                    <h:outputText value="#{text['payment.amount']}" />
+                                </p:column>
+                            </f:facet>
+                            <h:outputText value="#{payment.amount}" />
+                        </p:column>
+                        <p:column style="width: 20%">
+                            <f:facet name="header">
+                                <p:column sortBy="registrationID" >
+                                    <h:outputText value="#{text['payment.registrationID']}" />
+                                </p:column>
+                            </f:facet>
+                            <h:outputText value="#{payment.registrationID}" />
+                        </p:column>
+
+                        <p:column style="width: 20%">
+                            <f:facet name="header">
+                                <p:column sortBy="registrationFee" >
+                                    <h:outputText value="#{text['payment.registrationFee']}" />
+                                </p:column>
+                            </f:facet>
+                            <h:outputText value="#{payment.registrationFee}" />
+                        </p:column>
+                        <p:column style="width: 20%">
+                            <f:facet name="header">
+                                <p:column sortBy="mealFee" >
+                                    <h:outputText value="#{text['payment.mealFee']}" />
+                                </p:column>
+                            </f:facet>
+                            <h:outputText value="#{payment.mealFee}" />
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>

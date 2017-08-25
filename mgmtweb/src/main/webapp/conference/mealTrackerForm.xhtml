@@ -1,0 +1,68 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <ui:composition template="/layouts/default.xhtml">
+        <ui:define name="title">#{text['mealplan.title']}</ui:define>
+        <ui:param name="menu" value="UserMenu"/>
+
+        <ui:define name="body">
+            <div class="span10">
+                <h2>#{text['mealplan.heading']}</h2>
+                <h:form id="searchForm" styleClass="form-inline">
+                    <div id="actions" class="btn-group">
+                        <h:commandButton value="#{text['button.done']}" action="home" id="cancel"
+                                         immediate="true" styleClass="btn btn-default btn-sm">
+                        </h:commandButton>
+                    </div>  
+                </h:form>
+                <h:form id="personList">
+                    <div id="search" class="text-right">
+                        <span class="col-sm-9">
+                            <h:inputText id="q" size="20" value="#{mealTrackerForm.query}" styleClass="form-control input-sm" />
+                            <p:focus for="q"/>
+                        </span>
+                        <h:commandButton styleClass="btn btn-default btn-sm" action="#{mealTrackerForm.enter}" value="#{text['button.scan']}"/>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3 form-group">
+                            <h:outputText  styleClass="control-label" id="mealTotalCount" value="#{mealTrackerForm.mealTotalCount}" style="font-weight:bold;font-size:200px"/>
+                        </div>
+                        <div class="col-sm-3 form-group">
+                            <h:outputText  styleClass="control-label" id="mealTakenCount" value="#{mealTrackerForm.mealTakenCount}" style="font-weight:bold;font-size:200px" />
+                        </div>
+                        <div class="col-sm-3 form-group">
+                            <h:outputText  styleClass="btn-lg" id="mealLeftCount" value="#{mealTrackerForm.mealLeftCount}" style="font-weight:bold;font-size:200px"/>
+                        </div>                        
+                    </div>
+                    <p:dataTable id="mealtracker" var="mealtracker" value="#{mealTrackerForm.mealtrackers}" rows="30" >
+                        <p:column style="width: 5%">
+                            <f:facet name="header">
+                                <p:column sortBy="personID" >
+                                    <h:outputText value="#{text['mealtracker.personID']}" />
+                                </p:column>
+                            </f:facet>
+                            <h:outputText value="#{mealtracker.personID}" />
+                        </p:column>
+                        <p:column style="width: 20%">
+                            <f:facet name="header">
+                                <p:column sortBy="remark" >
+                                    <h:outputText value="#{text['mealtracker.remark']}" />
+                                </p:column>
+                            </f:facet>
+                            <h:outputText value="#{mealtracker.remark}" />
+                        </p:column>
+                        <p:column style="width: 34%">
+                            <f:facet name="header">
+                                <p:column sortBy="amount" >
+                                    <h:outputText value="#{text['mealtracker.lastModified']}" />
+                                </p:column>
+                            </f:facet>
+                            <h:outputText value="#{mealtracker.lastModified}" />
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>

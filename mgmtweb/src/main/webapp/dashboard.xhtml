@@ -1,0 +1,191 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/layouts/default.xhtml">
+        <ui:define name="title">#{text['statistics.title']}</ui:define>
+
+        <ui:define name="body">
+            <div class="span10">
+                <h2>#{text['statistics.heading']}</h2>
+
+                <h:form id="familyList">
+                    <div id="actions" class="btn-group">
+                        <!-- <script> shows up here and causes square corners on the Add button below -->
+                        <h:commandButton value="#{text['button.done']}" action="home" id="cancel"
+                                         immediate="true" styleClass="btn">
+                        </h:commandButton>
+                    </div>
+                    <p:tabView>
+                        <p:tab title="大会人数">
+                            <p:dataTable id="messages" var="stat" value="#{dashboard.statistics}" >
+                                <f:facet name="header">
+                                    大会人数
+                                </f:facet>
+                                <p:columnGroup type="header">
+
+                                    <p:row>
+                                        <p:column style="width: 20%" rowspan="2" headerText="Church/Organization" />
+                                        <p:column style="width: 10%" rowspan="2" headerText="Headcount" />
+                                        <p:column colspan="2" headerText="Adult 18+" />
+
+                                        <p:column style="width: 10%" rowspan="2" headerText="中文大会" />
+                                        <p:column style="width: 10%" rowspan="2" headerText="Grace Conference" />
+                                        <p:column style="width: 10%" rowspan="2" headerText="1-5th grade" />
+                                        <p:column style="width: 10%" rowspan="2" headerText="3yrs-Kindergarten" />
+                                        <p:column style="width: 10%" rowspan="2" headerText="1-2yrs" />
+                                    </p:row>
+                                    <p:row>
+                                        <p:column style="width: 10%" headerText="Christian" />
+                                        <p:column style="width: 10%" headerText="Seeker" />
+                                    </p:row>
+                                </p:columnGroup>
+                                <p:column style="width: 20%">
+                                    <f:facet name="header">
+                                        <p:column sortBy="churchName" >
+                                            <h:outputText value="Church/Organization" />
+                                        </p:column>
+                                    </f:facet>
+                                    <h:outputText value="#{stat.churchName}" />
+                                </p:column>
+                                <!--
+        <p:column headerText="60+" sortBy="#{stat.totalAdultA6}" style="width: 10%">
+            <h:outputText value="#{stat.totalAdultA6}" />
+        </p:column>
+        
+        <p:column style="width: 10%">
+            <f:facet name="header">
+                <p:column sortBy="totalAdultA5" >
+                    <h:outputText value="50-59" />
+                </p:column>
+            </f:facet>
+            <h:outputText value="#{stat.totalAdultA5}" />
+        </p:column>
+        <p:column style="width: 10%">
+            <f:facet name="header">
+                <p:column sortBy="totalAdultA4" >
+                    <h:outputText value="40-49" />
+                </p:column>
+            </f:facet>
+            <h:outputText value="#{stat.totalAdultA4}" />
+        </p:column>
+        <p:column style="width: 10%">
+            <f:facet name="header">
+                <p:column sortBy="totalAdultA3" >
+                    <h:outputText value="30-39" />
+                </p:column>
+            </f:facet>
+            <h:outputText value="#{stat.totalAdultA3}" />
+        </p:column>
+        <p:column style="width: 10%">
+            <f:facet name="header">
+                <p:column sortBy="totalAdultA2" >
+                    <h:outputText value="18-29" />
+                </p:column>
+            </f:facet>
+            <h:outputText value="#{stat.totalAdultA4}" />
+        </p:column>
+                                -->
+                                <p:column style="width: 10%">
+                                    <f:facet name="header">
+                                        <p:column sortBy="totalMisc1" >
+                                            <h:outputText value="Headcount" />
+                                        </p:column>
+                                    </f:facet>
+                                    <h:outputText value="#{stat.totalMisc1}" />
+                                </p:column>
+                                <p:column style="width: 10%">
+                                    <f:facet name="header">
+                                        <p:column sortBy="totalChristian" >
+                                            <h:outputText value="Christian" />
+                                        </p:column>
+                                    </f:facet>
+                                    <h:outputText value="#{stat.totalChristian}" />
+                                </p:column>
+                                <p:column style="width: 10%">
+                                    <f:facet name="header">
+                                        <p:column sortBy="totalSeeker" >
+                                            <h:outputText value="Seeker" />
+                                        </p:column>
+                                    </f:facet>
+                                    <h:outputText value="#{stat.totalSeeker}" />
+                                </p:column>
+                                <p:column style="width: 10%">
+                                    <f:facet name="header">
+                                        <p:column sortBy="totalChineseConference" >
+                                            <h:outputText value="中文大会" />
+                                        </p:column>
+                                    </f:facet>
+                                    <h:outputText value="#{stat.totalChineseConference}" />
+                                </p:column>
+                                <p:column style="width: 10%">
+                                    <f:facet name="header">
+                                        <p:column sortBy="totalEnglishConference" >
+                                            <h:outputText value="Grace Conference" />
+                                        </p:column>
+                                    </f:facet>
+                                    <h:outputText value="#{stat.totalEnglishConference}" />
+                                </p:column>
+                                <p:column style="width: 10%">
+                                    <f:facet name="header">
+                                        <p:column sortBy="totalChildrenGroup2" >
+                                            <h:outputText value="1-5th grade" />
+                                        </p:column>
+                                    </f:facet>
+                                    <h:outputText value="#{stat.totalChildrenGroup2}" />
+                                </p:column>
+                                <p:column style="width: 10%">
+                                    <f:facet name="header">
+                                        <p:column sortBy="totalChildrenGroup1" >
+                                            <h:outputText value="3yrs-Kindergarten" />
+                                        </p:column>
+                                    </f:facet>
+                                    <h:outputText value="#{stat.totalChildrenGroup1}" />
+                                </p:column>
+                                <p:column style="width: 10%">
+                                    <f:facet name="header">
+                                        <p:column sortBy="totalToddler" >
+                                            <h:outputText value="1-2yrs" />
+                                        </p:column>
+                                    </f:facet>
+                                    <h:outputText value="#{stat.totalToddler}" />
+                                </p:column>
+                            </p:dataTable>
+                        </p:tab>
+                        <p:tab title="專題">
+                            <p:dataTable id="messages2" var="wstat" value="#{dashboard.workshopStat}">
+                                <f:facet name="header">
+                                    專題
+                                </f:facet>
+                                <!--
+                                <p:columnGroup type="header">
+                                    <p:row>
+                                        <p:column style="width: 20%" headerText="Church/Organization" />
+                                        <p:column style="width: 20%" headerText="Headcount" />
+                                    </p:row>
+                                </p:columnGroup>
+                                -->
+                                <p:column style="width: 20%">
+                                    <f:facet name="header">
+                                        <p:column sortBy="churchName" >
+                                            <h:outputText value="Workshop" />
+                                        </p:column>
+                                    </f:facet>
+                                    <h:outputText value="#{wstat.churchName}" />
+                                </p:column>
+                                <p:column style="width: 20%">
+                                    <f:facet name="header">
+                                        <p:column sortBy="totalAdult" >
+                                            <h:outputText value="Headcount" />
+                                        </p:column>
+                                    </f:facet>
+                                    <h:outputText value="#{wstat.totalAdult}" />
+                                </p:column>
+                            </p:dataTable>
+                        </p:tab>
+                    </p:tabView>
+
+                </h:form>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>

@@ -1,0 +1,143 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <ui:composition template="/layouts/default.xhtml">
+        <ui:define name="title">#{text['mealplan.title']}</ui:define>
+        <ui:param name="menu" value="UserMenu"/>
+
+        <ui:define name="body">
+            <c:set var="delObject" value="#{text['mealplanList.mealplan']}"/>
+            <script type="text/javascript">var msgDelConfirm =
+                        "<h:outputFormat value="#{text['delete.confirm']}"><f:param value="#{delObject}" /></h:outputFormat>";</script>
+
+            <div class="col-sm-2">
+                <h2>#{text['mealplan.heading']}</h2>
+                <h:outputText value="#{text['mealplan.message']}"/>
+            </div>
+            <div class="col-sm-7">
+                <h:form id="mealplanForm" styleClass="well" autocomplete="off">
+                    <h:inputHidden value="#{mealplanForm.mealplan.registrationID}"/>
+                    <h:panelGroup styleClass="form-group" layout="block">
+                        <fieldset>
+                            <legend><h:outputText value="#{text['mealplan.firstday']}"/></legend>
+                            <h:outputLabel styleClass="control-label" for="breakfast1" value="#{text['mealplan.breakfast1']}">
+                                <h:selectOneMenu value="#{mealplanForm.mealplan.breakfast1}" id="breakfast1" styleClass="form-control" style="height: 38px">
+                                    <f:selectItems value="#{mealplanForm.quantities}"/> </h:selectOneMenu>
+                            </h:outputLabel>
+
+                            <h:outputLabel styleClass="control-label" for="lunch1" value="#{text['mealplan.lunch1']}">
+                                <h:selectOneMenu value="#{mealplanForm.mealplan.lunch1}" id="lunch1" styleClass="form-control" style="height: 38px"> 
+                                    <f:selectItems value="#{mealplanForm.quantities}"/> </h:selectOneMenu>
+                            </h:outputLabel>
+
+                            <h:outputLabel styleClass="control-label" for="dinner1" value="#{text['mealplan.dinner1']}">
+                                <h:selectOneMenu value="#{mealplanForm.mealplan.dinner1}" id="dinner1" styleClass="form-control" style="height: 38px"> 
+                                    <f:selectItems value="#{mealplanForm.quantities}"/> </h:selectOneMenu>
+                            </h:outputLabel>
+                        </fieldset>
+                    </h:panelGroup>
+                    <h:panelGroup styleClass="form-group" layout="block">
+                        <fieldset>
+                            <legend><h:outputText value="#{text['mealplan.secondday']}"/></legend>
+                            <h:outputLabel styleClass="control-label" for="breakfast2" value="#{text['mealplan.breakfast2']}">
+                                <h:selectOneMenu value="#{mealplanForm.mealplan.breakfast2}" id="breakfast2" styleClass="form-control" style="height: 38px"> 
+                                    <f:selectItems value="#{mealplanForm.quantities}"/> 
+                                </h:selectOneMenu>
+                            </h:outputLabel>
+
+                            <h:outputLabel styleClass="control-label" for="lunch2" value="#{text['mealplan.lunch2']}">
+                                <h:selectOneMenu value="#{mealplanForm.mealplan.lunch2}" id="lunch2" styleClass="form-control" style="height: 38px"> 
+                                    <f:selectItems value="#{mealplanForm.quantities}"/> 
+                                </h:selectOneMenu>
+                            </h:outputLabel>
+
+                            <h:outputLabel styleClass="control-label" for="dinner2" value="#{text['mealplan.dinner2']}">
+                                <h:selectOneMenu value="#{mealplanForm.mealplan.dinner2}" id="dinner2" styleClass="form-control" style="height: 38px"> 
+                                    <f:selectItems value="#{mealplanForm.quantities}"/> 
+                                </h:selectOneMenu>
+                            </h:outputLabel>
+                        </fieldset>
+                    </h:panelGroup>
+                    <h:panelGroup styleClass="form-group" layout="block">
+                        <fieldset>
+                            <legend><h:outputText value="#{text['mealplan.thirdday']}"/></legend>
+                            <h:outputLabel styleClass="control-label" for="breakfast3" value="#{text['mealplan.breakfast3']}">
+                                <h:selectOneMenu value="#{mealplanForm.mealplan.breakfast3}" id="breakfast3" styleClass="form-control" style="height: 38px">
+                                    <f:selectItems value="#{mealplanForm.quantities}"/> 
+                                </h:selectOneMenu>
+                            </h:outputLabel>
+
+                            <h:outputLabel styleClass="control-label" for="lunch3" value="#{text['mealplan.lunch3']}">
+                                <h:selectOneMenu value="#{mealplanForm.mealplan.lunch3}" id="lunch3" styleClass="form-control" style="height: 38px"> 
+                                    <f:selectItems value="#{mealplanForm.quantities}"/> 
+                                </h:selectOneMenu>
+                            </h:outputLabel>
+
+                            <h:outputLabel styleClass="control-label" for="dinner3" value="#{text['mealplan.dinner3']}">
+                                <h:selectOneMenu value="#{mealplanForm.mealplan.dinner3}" id="dinner3" styleClass="form-control" style="height: 38px">
+                                    <f:selectItems value="#{mealplanForm.quantities}"/> 
+                                </h:selectOneMenu>
+                            </h:outputLabel>
+                        </fieldset>
+                    </h:panelGroup>
+                    <h:panelGroup styleClass="form-group" layout="block">
+                        <fieldset>
+                            <legend><h:outputText value="#{text['mealplan.fourthday']}"/></legend>
+                            <h:outputLabel styleClass="control-label" for="breakfast4" value="#{text['mealplan.breakfast4']}">
+                                <h:selectOneMenu value="#{mealplanForm.mealplan.breakfast4}" id="breakfast4" styleClass="form-control" style="height: 38px">
+                                    <f:selectItems value="#{mealplanForm.quantities}"/> 
+                                </h:selectOneMenu>
+                            </h:outputLabel>
+
+                            <h:outputLabel styleClass="control-label" for="lunch4" value="#{text['mealplan.lunch4']}">
+                                <h:selectOneMenu value="#{mealplanForm.mealplan.lunch4}" id="lunch4" styleClass="form-control" style="height: 38px"> 
+                                    <f:selectItems value="#{mealplanForm.quantities}"/> 
+                                </h:selectOneMenu>
+                            </h:outputLabel>
+
+                            <h:outputLabel styleClass="control-label" for="dinner4" value="#{text['mealplan.dinner4']}">
+                                <h:selectOneMenu value="#{mealplanForm.mealplan.dinner4}" id="dinner4" styleClass="form-control" style="height: 38px"> 
+                                    <f:selectItems value="#{mealplanForm.quantities}"/> 
+                                </h:selectOneMenu>
+                            </h:outputLabel>
+                        </fieldset>
+                    </h:panelGroup>
+                    <h:panelGroup styleClass="form-group" layout="block">
+                        <fieldset>
+                            <legend><h:outputText value="#{text['mealplan.fifthday']}"/></legend>
+                            <h:outputLabel styleClass="control-label" for="breakfast5" value="#{text['mealplan.breakfast5']}">
+                                <h:selectOneMenu value="#{mealplanForm.mealplan.breakfast5}" id="breakfast5" styleClass="form-control" style="height: 38px">
+                                    <f:selectItems value="#{mealplanForm.quantities}"/> 
+                                </h:selectOneMenu>
+                            </h:outputLabel>
+
+                            <h:outputLabel styleClass="control-label" for="lunch5" value="#{text['mealplan.lunch5']}">
+                                <h:selectOneMenu value="#{mealplanForm.mealplan.lunch5}" id="lunch5" styleClass="form-control" style="height: 38px">
+                                    <f:selectItems value="#{mealplanForm.quantities}"/> 
+                                </h:selectOneMenu>
+                            </h:outputLabel>
+
+                            <h:outputLabel styleClass="control-label" for="dinner5" value="#{text['mealplan.dinner5']}">
+                                <h:selectOneMenu value="#{mealplanForm.mealplan.dinner5}" id="dinner5" styleClass="form-control" style="height: 38px">
+                                    <f:selectItems value="#{mealplanForm.quantities}"/> 
+                                </h:selectOneMenu>
+                            </h:outputLabel>
+                        </fieldset>
+                    </h:panelGroup>
+                    <div class="form-group form-actions">
+                        <h:commandButton value="#{text['button.save']}" action="#{mealplanForm.save}" styleClass="btn btn-primary"/>
+
+                    <!-- Todo: hide this button when the user's id is not assigned. Wrapping it with <c:if test="${not empty mealplanForm.mealplan}"> or
+                         rendered="${not empty mealplanForm.mealplan.registrationID}" causes this button to not call the delete() method in UserForm.  -->
+                        <h:commandButton value="#{text['button.delete']}" action="#{mealplanForm.delete}"
+                                         styleClass="btn btn-default" onclick="return confirmMessage(msgDelConfirm)"/>
+
+                        <h:commandButton value="#{text['button.cancel']}" action="#{mealplanForm.cancel}" immediate="true"
+                                         styleClass="btn btn-default"/>
+                    </div>
+                </h:form>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>

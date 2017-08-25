@@ -1,0 +1,297 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/layouts/default.xhtml">
+        <ui:define name="title">#{text['mealplanList.title']}</ui:define>
+
+        <ui:define name="body">
+            <div class="span10">
+                <h2>#{text['mealplanList.heading']}</h2>
+
+                <h:form id="mealplanForm" styleClass="form-search">
+                    <div id="search" class="input-append">
+                        <h:inputText id="q" size="20" value="#{mealplanList.query}" styleClass="input-medium search-query"/>
+                        <h:commandButton styleClass="btn" action="#{mealplanList.search}" value="#{text['button.search']}"/>
+                    </div>
+                </h:form>
+
+                <h:form id="mealplanList">
+
+                    <div id="actions" class="form-actions">
+                        <h:commandButton value="#{text['button.done']}" action="home" id="cancel"
+                                         immediate="true" styleClass="btn">
+                        </h:commandButton>
+                    </div>
+                    <p:dataTable id="stat" var="mealplan" value="#{mealplanList.mealplansStat}" sortBy="#{mealplanList.sortColumn}">
+                        <p:column style="width: 5%">
+                            <f:facet name="header">
+                                <p:column sortBy="mealplanId" >
+                                    <h:outputText value="#{text['mealplan.id']}" />
+                                </p:column>
+                            </f:facet>
+                            <h:commandLink action="#{mealplanForm.edit}" value="#{mealplan.registrationID}" >
+                                <f:param name="id" value="#{mealplan.registrationID}"/>
+                            </h:commandLink>
+                        </p:column>
+                        <p:column style="width: 5%">
+                            <f:facet name="header">
+                                <p:column sortBy="breakfast1" >
+                                    <h:outputText value="#{text['mealplan.breakfast1']}" />
+                                </p:column>
+                            </f:facet>
+                            <h:outputText value="#{mealplan.breakfast1}" />
+                        </p:column>
+                        <p:column style="width: 5%">
+                            <f:facet name="header">
+                                <p:column sortBy="lunch1" >
+                                    <h:outputText value="#{text['mealplan.lunch1']}" />
+                                </p:column>
+                            </f:facet>
+                            <h:outputText value="#{mealplan.lunch1}" />
+                        </p:column> 
+                        <p:column style="width: 5%">
+                            <f:facet name="header">
+                                <p:column sortBy="dinner1" >
+                                    <h:outputText value="#{text['mealplan.dinner1']}" />
+                                </p:column>
+                            </f:facet>
+                            <h:outputText value="#{mealplan.dinner1}" />
+                        </p:column>
+                        <p:column style="width: 5%">
+                            <f:facet name="header">
+                                <p:column sortBy="breakfast2" >
+                                    <h:outputText value="#{text['mealplan.breakfast2']}" />
+                                </p:column>
+                            </f:facet>
+                            <h:outputText value="#{mealplan.breakfast2}" />
+                        </p:column>
+                        <p:column style="width: 5%">
+                            <f:facet name="header">
+                                <p:column sortBy="lunch2" >
+                                    <h:outputText value="#{text['mealplan.lunch2']}" />
+                                </p:column>
+                            </f:facet>
+                            <h:outputText value="#{mealplan.lunch2}" />
+                        </p:column> 
+                        <p:column style="width: 5%">
+                            <f:facet name="header">
+                                <p:column sortBy="dinner2" >
+                                    <h:outputText value="#{text['mealplan.dinner2']}" />
+                                </p:column>
+                            </f:facet>
+                            <h:outputText value="#{mealplan.dinner2}" />
+                        </p:column>
+                        <p:column style="width: 5%">
+                            <f:facet name="header">
+                                <p:column sortBy="breakfast3" >
+                                    <h:outputText value="#{text['mealplan.breakfast3']}" />
+                                </p:column>
+                            </f:facet>
+                            <h:outputText value="#{mealplan.breakfast3}" />
+                        </p:column>
+                        <p:column style="width: 5%">
+                            <f:facet name="header">
+                                <p:column sortBy="lunch3" >
+                                    <h:outputText value="#{text['mealplan.lunch3']}" />
+                                </p:column>
+                            </f:facet>
+                            <h:outputText value="#{mealplan.lunch3}" />
+                        </p:column> 
+                        <p:column style="width: 5%">
+                            <f:facet name="header">
+                                <p:column sortBy="dinner3" >
+                                    <h:outputText value="#{text['mealplan.dinner3']}" />
+                                </p:column>
+                            </f:facet>
+                            <h:outputText value="#{mealplan.dinner3}" />
+                        </p:column> 
+                        <p:column style="width: 5%">
+                            <f:facet name="header">
+                                <p:column sortBy="breakfast4" >
+                                    <h:outputText value="#{text['mealplan.breakfast4']}" />
+                                </p:column>
+                            </f:facet>
+                            <h:outputText value="#{mealplan.breakfast4}" />
+                        </p:column>
+                        <p:column style="width: 5%">
+                            <f:facet name="header">
+                                <p:column sortBy="lunch4" >
+                                    <h:outputText value="#{text['mealplan.lunch4']}" />
+                                </p:column>
+                            </f:facet>
+                            <h:outputText value="#{mealplan.lunch4}" />
+                        </p:column> 
+                        <p:column style="width: 5%">
+                            <f:facet name="header">
+                                <p:column sortBy="dinner4" >
+                                    <h:outputText value="#{text['mealplan.dinner4']}" />
+                                </p:column>
+                            </f:facet>
+                            <h:outputText value="#{mealplan.dinner4}" />
+                        </p:column> 
+                        <p:column style="width: 5%">
+                            <f:facet name="header">
+                                <p:column sortBy="breakfast5" >
+                                    <h:outputText value="#{text['mealplan.breakfast5']}" />
+                                </p:column>
+                            </f:facet>
+                            <h:outputText value="#{mealplan.breakfast5}" />
+                        </p:column>
+                        <p:column style="width: 5%">
+                            <f:facet name="header">
+                                <p:column sortBy="lunch5" >
+                                    <h:outputText value="#{text['mealplan.lunch5']}" />
+                                </p:column>
+                            </f:facet>
+                            <h:outputText value="#{mealplan.lunch5}" />
+                        </p:column> 
+                        <p:column style="width: 5%">
+                            <f:facet name="header">
+                                <p:column sortBy="dinner5" >
+                                    <h:outputText value="#{text['mealplan.dinner5']}" />
+                                </p:column>
+                            </f:facet>
+                            <h:outputText value="#{mealplan.dinner5}" />
+                        </p:column> 
+                    </p:dataTable>
+                     <hr  align="left" style="width: 80%; height: 2px"/>
+
+                    <p:dataTable id="messages" var="mealplan" value="#{mealplanList.mealplans}" sortBy="#{mealplanList.sortColumn}" paginator="true" rows="30" 
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="10,30,50">
+                        <p:column style="width: 5%">
+                            <f:facet name="header">
+                                <p:column sortBy="mealplanId" >
+                                    <h:outputText value="#{text['mealplan.id']}" />
+                                </p:column>
+                            </f:facet>
+                            <h:commandLink action="#{mealplanForm.edit}" value="#{mealplan.registrationID}" >
+                                <f:param name="id" value="#{mealplan.registrationID}"/>
+                            </h:commandLink>
+                        </p:column>
+                        <p:column style="width: 5%">
+                            <f:facet name="header">
+                                <p:column sortBy="breakfast1" >
+                                    <h:outputText value="#{text['mealplan.breakfast1']}" />
+                                </p:column>
+                            </f:facet>
+                            <h:outputText value="#{mealplan.breakfast1}" />
+                        </p:column>
+                        <p:column style="width: 5%">
+                            <f:facet name="header">
+                                <p:column sortBy="lunch1" >
+                                    <h:outputText value="#{text['mealplan.lunch1']}" />
+                                </p:column>
+                            </f:facet>
+                            <h:outputText value="#{mealplan.lunch1}" />
+                        </p:column> 
+                        <p:column style="width: 5%">
+                            <f:facet name="header">
+                                <p:column sortBy="dinner1" >
+                                    <h:outputText value="#{text['mealplan.dinner1']}" />
+                                </p:column>
+                            </f:facet>
+                            <h:outputText value="#{mealplan.dinner1}" />
+                        </p:column>
+                        <p:column style="width: 5%">
+                            <f:facet name="header">
+                                <p:column sortBy="breakfast2" >
+                                    <h:outputText value="#{text['mealplan.breakfast2']}" />
+                                </p:column>
+                            </f:facet>
+                            <h:outputText value="#{mealplan.breakfast2}" />
+                        </p:column>
+                        <p:column style="width: 5%">
+                            <f:facet name="header">
+                                <p:column sortBy="lunch2" >
+                                    <h:outputText value="#{text['mealplan.lunch2']}" />
+                                </p:column>
+                            </f:facet>
+                            <h:outputText value="#{mealplan.lunch2}" />
+                        </p:column> 
+                        <p:column style="width: 5%">
+                            <f:facet name="header">
+                                <p:column sortBy="dinner2" >
+                                    <h:outputText value="#{text['mealplan.dinner2']}" />
+                                </p:column>
+                            </f:facet>
+                            <h:outputText value="#{mealplan.dinner2}" />
+                        </p:column>
+                        <p:column style="width: 5%">
+                            <f:facet name="header">
+                                <p:column sortBy="breakfast3" >
+                                    <h:outputText value="#{text['mealplan.breakfast3']}" />
+                                </p:column>
+                            </f:facet>
+                            <h:outputText value="#{mealplan.breakfast3}" />
+                        </p:column>
+                        <p:column style="width: 5%">
+                            <f:facet name="header">
+                                <p:column sortBy="lunch3" >
+                                    <h:outputText value="#{text['mealplan.lunch3']}" />
+                                </p:column>
+                            </f:facet>
+                            <h:outputText value="#{mealplan.lunch3}" />
+                        </p:column> 
+                        <p:column style="width: 5%">
+                            <f:facet name="header">
+                                <p:column sortBy="dinner3" >
+                                    <h:outputText value="#{text['mealplan.dinner3']}" />
+                                </p:column>
+                            </f:facet>
+                            <h:outputText value="#{mealplan.dinner3}" />
+                        </p:column> 
+                        <p:column style="width: 5%">
+                            <f:facet name="header">
+                                <p:column sortBy="breakfast4" >
+                                    <h:outputText value="#{text['mealplan.breakfast4']}" />
+                                </p:column>
+                            </f:facet>
+                            <h:outputText value="#{mealplan.breakfast4}" />
+                        </p:column>
+                        <p:column style="width: 5%">
+                            <f:facet name="header">
+                                <p:column sortBy="lunch4" >
+                                    <h:outputText value="#{text['mealplan.lunch4']}" />
+                                </p:column>
+                            </f:facet>
+                            <h:outputText value="#{mealplan.lunch4}" />
+                        </p:column> 
+                        <p:column style="width: 5%">
+                            <f:facet name="header">
+                                <p:column sortBy="dinner4" >
+                                    <h:outputText value="#{text['mealplan.dinner4']}" />
+                                </p:column>
+                            </f:facet>
+                            <h:outputText value="#{mealplan.dinner4}" />
+                        </p:column> 
+                        <p:column style="width: 5%">
+                            <f:facet name="header">
+                                <p:column sortBy="breakfast5" >
+                                    <h:outputText value="#{text['mealplan.breakfast5']}" />
+                                </p:column>
+                            </f:facet>
+                            <h:outputText value="#{mealplan.breakfast5}" />
+                        </p:column>
+                        <p:column style="width: 5%">
+                            <f:facet name="header">
+                                <p:column sortBy="lunch5" >
+                                    <h:outputText value="#{text['mealplan.lunch5']}" />
+                                </p:column>
+                            </f:facet>
+                            <h:outputText value="#{mealplan.lunch5}" />
+                        </p:column> 
+                        <p:column style="width: 5%">
+                            <f:facet name="header">
+                                <p:column sortBy="dinner5" >
+                                    <h:outputText value="#{text['mealplan.dinner5']}" />
+                                </p:column>
+                            </f:facet>
+                            <h:outputText value="#{mealplan.dinner5}" />
+                        </p:column> 
+                    </p:dataTable>
+                </h:form>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>

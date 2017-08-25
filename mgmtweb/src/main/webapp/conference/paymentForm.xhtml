@@ -1,0 +1,101 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <ui:composition template="/layouts/default.xhtml">
+        <ui:define name="title">#{text['payment.title']}</ui:define>
+        <ui:param name="menu" value="UserMenu"/>
+
+        <ui:define name="body">
+            <c:set var="delObject" value="#{text['paymentList.payment']}"/>
+            <script type="text/javascript">var msgDelConfirm =
+                        "<h:outputFormat value="#{text['delete.confirm']}"><f:param value="#{delObject}" /></h:outputFormat>";</script>
+
+            <div class="col-sm-2">
+                <h2>#{text['payment.heading']}</h2>
+                <h:outputText value="#{text['payment.message']}"/>
+            </div>
+            <div class="col-sm-7">
+                <h:form id="paymentForm" styleClass="well" autocomplete="off">
+                    <p:growl id="msgs" showDetail="true" />
+                    <h:inputHidden value="#{paymentForm.payment.id}" id="id"/>
+                    <h:inputHidden value="#{paymentForm.payment.registrationID}"/>
+                    <div class="form-group">
+                        <h:outputLabel styleClass="control-label" for="registrationID" value="#{text['payment.registrationID']}"/>
+                        <h:inputText styleClass="form-control" value="#{paymentForm.payment.registrationID}" id="registrationID" disabled="true"/>
+                        <p:message for="registrationID"/>
+                    </div>
+                    <div class="form-group">
+                        <h:outputLabel styleClass="control-label" for="paymentDate" value="#{text['payment.paymentDate']}"/>
+                        <p:calendar value="#{paymentForm.payment.paymentDate}"  id="paymentDate" pattern="yyyy-MM-dd" mode="popup" />
+                    </div>
+                    <div class="form-group">
+                        <h:outputLabel styleClass="control-label" for="amount" value="#{text['payment.amount']}"/>
+                        ${paymentForm.payment.currency} $<h:inputText styleClass="form-control" value="#{paymentForm.payment.amount}" id="amount" required="true"/>
+                        <p:message for="amount"/>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2 form-group">
+                            <h:outputLabel styleClass="control-label" for="creditCard" value="#{text['payment.creditCard']}"/>
+                            <h:selectBooleanCheckbox styleClass="checkbox" value="#{paymentForm.payment.creditCard}" id="creditCard" required="false"/>
+                            <p:message for="creditCard"/>
+                        </div>
+                        <div class="col-sm-2 form-group">
+                            <h:outputLabel styleClass="control-label" for="personalCheck" value="#{text['payment.personalCheck']}"/>
+                            <h:selectBooleanCheckbox  styleClass="checkbox" value="#{paymentForm.payment.personalCheck}" id="personalCheck" required="false"/>
+                            <p:message for="personalCheck"/>
+                        </div>
+                        <div class="col-sm-2 form-group">
+                            <h:outputLabel styleClass="control-label" for="cash" value="#{text['payment.cash']}"/>
+                            <h:selectBooleanCheckbox  styleClass="checkbox" value="#{paymentForm.payment.cash}" id="cash" required="false"/>
+                            <p:message for="cash"/>
+                        </div>
+                        <div class="col-sm-2 form-group">
+                            <h:outputLabel styleClass="control-label" for="paidByConference" value="#{text['payment.paidByConference']}"/>
+                            <h:selectBooleanCheckbox styleClass="checkbox" id="paidByConference" value="#{paymentForm.payment.paidByConference}" required="false"/>
+                            <p:message for="paidByConference"/>
+                        </div>
+                        <div class="col-sm-2 form-group">
+                            <h:outputLabel styleClass="control-label" for="refund" value="#{text['payment.refund']}"/>
+                            <h:selectBooleanCheckbox styleClass="checkbox" id="refund" value="#{paymentForm.payment.refund}" required="false"/>
+                            <p:message for="refund"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <h:outputLabel styleClass="control-label" for="remarks" value="#{text['payment.remarks']}"/>
+                        <h:inputTextarea styleClass="form-control" value="#{paymentForm.payment.remarks}" id="remarks" required="false"/>
+                        <p:message for="remarks"/>
+                    </div>
+                    <h:panelGroup styleClass="form-group" layout="block">
+                        <fieldset>
+                            <legend><h:outputText value="#{text['payment.fee']}"/></legend>
+
+                            <h:outputLabel styleClass="control-label" for="referenceNumber" value="#{text['payment.referenceNumber']}">
+                                <h:inputText styleClass="form-control" value="#{paymentForm.payment.referenceNumber}" id="referenceNumber"/>
+                            </h:outputLabel><br/>
+
+                            <h:outputLabel styleClass="control-label" for="registrationFee" value="#{text['payment.registrationFee']}">
+                                <h:inputText styleClass="form-control" value="#{paymentForm.payment.registrationFee}" id="registrationFee"/>
+                            </h:outputLabel><br/>
+
+                            <h:outputLabel styleClass="control-label" for="mealFee" value="#{text['payment.mealFee']}">
+                                <h:inputText styleClass="form-control" value="#{paymentForm.payment.mealFee}" id="mealFee"/>
+                            </h:outputLabel>
+                        </fieldset>
+                    </h:panelGroup>
+                    <div class="form-group form-actions">
+                        <h:commandButton value="#{text['button.save']}" action="#{paymentForm.save}" styleClass="btn btn-primary"/>
+
+                    <!-- Todo: hide this button when the user's id is not assigned. Wrapping it with <c:if test="${not empty userForm.user.id}"> or
+                         rendered="${not empty userForm.user.id}" causes this button to not call the delete() method in UserForm.  -->
+                        <h:commandButton value="#{text['button.delete']}" action="#{paymentForm.delete}"
+                                         styleClass="btn btn-default" onclick="return confirmMessage(msgDelConfirm)"/>
+
+                        <h:commandButton value="#{text['button.cancel']}" action="#{paymentForm.cancel}" immediate="true"
+                                         styleClass="btn btn-default"/>
+                    </div>
+                </h:form>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>

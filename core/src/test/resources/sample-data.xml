@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <table name="app_user">
+        <column>id</column>
+        <column>username</column>
+        <column>password</column>
+        <column>first_name</column>
+        <column>last_name</column>
+        <column>address</column>
+        <column>city</column>
+        <column>country</column>
+        <column>email</column>
+        <column>phone_number</column>
+        <column>postal_code</column>
+        <column>province</column>
+        <column>website</column>
+        <column>password_hint</column>
+        <column>version</column>
+        <column>account_enabled</column>
+        <column>account_expired</column>
+        <column>account_locked</column>
+        <column>credentials_expired</column>
+        <row>
+            <value description="id">-1</value>
+            <value description="username">user</value>
+            <value description="password">$2a$10$CnQVJ9bsWBjMpeSKrrdDEeuIptZxXrwtI6CZ/OgtNxhIgpKxXeT9y</value>
+            <value description="first_name">Tomcat</value>
+            <value description="last_name">User</value>
+            <value description="address"></value>
+            <value description="city">Denver</value>
+            <value description="country">US</value>
+            <value description="email">matt_raible@yahoo.com</value>
+            <value description="phone_number"></value>
+            <value description="postal_code">80210</value>
+            <value description="province">CO</value>
+            <value description="website">http://tomcat.apache.org</value>
+            <value description="password_hint"><![CDATA[A male kitty.]]></value>
+            <value description="version">1</value>
+            <value description="account_enabled">1</value>
+            <value description="account_expired">0</value>
+            <value description="account_locked">0</value>
+            <value description="credentials_expired">0</value>
+        </row>
+        <row>
+            <value description="id">-2</value>
+            <value description="username">admin</value>
+            <value description="password">$2a$10$bH/ssqW8OhkTlIso9/yakubYODUOmh.6m5HEJvcBq3t3VdBh7ebqO</value>
+            <value description="first_name">Matt</value>
+            <value description="last_name">Raible</value>
+            <value description="address"></value>
+            <value description="city">Denver</value>
+            <value description="country">US</value>
+            <value description="email">matt@raibledesigns.com</value>
+            <value description="phone_number"></value>
+            <value description="postal_code">80210</value>
+            <value description="province">CO</value>
+            <value description="website">http://raibledesigns.com</value>
+            <value description="password_hint"><![CDATA[Not a female kitty.]]></value>
+            <value description="version">1</value>
+            <value description="account_enabled">1</value>
+            <value description="account_expired">0</value>
+            <value description="account_locked">0</value>
+            <value description="credentials_expired">0</value>
+        </row>
+        <row>
+            <value description="id">-3</value>
+            <value description="username">two_roles_user</value>
+            <value description="password">$2a$10$bH/ssqW8OhkTlIso9/yakubYODUOmh.6m5HEJvcBq3t3VdBh7ebqO</value>
+            <value description="first_name">Two Roles</value>
+            <value description="last_name">User</value>
+            <value description="address"></value>
+            <value description="city">Denver</value>
+            <value description="country">US</value>
+            <value description="email">two_roles_user@appfuse.org</value>
+            <value description="phone_number"></value>
+            <value description="postal_code">80210</value>
+            <value description="province">CO</value>
+            <value description="website">http://raibledesigns.com</value>
+            <value description="password_hint"><![CDATA[Not a female kitty.]]></value>
+            <value description="version">1</value>
+            <value description="account_enabled">1</value>
+            <value description="account_expired">0</value>
+            <value description="account_locked">0</value>
+            <value description="credentials_expired">0</value>
+        </row>        
+    </table>
+    <table name="role">
+        <column>id</column>
+        <column>name</column>
+        <column>description</column>
+        <row>
+            <value description="id">-1</value>
+            <value description="name">ROLE_ADMIN</value>
+            <value description="description"><![CDATA[Administrator role (can edit Users)]]></value>
+        </row>
+        <row>
+            <value description="id">-2</value>
+            <value description="name">ROLE_USER</value>
+            <value description="description"><![CDATA[Default role for all Users]]></value>
+        </row>
+    </table>
+    <table name="user_role">
+        <column>user_id</column>
+        <column>role_id</column>
+        <row>
+            <value description="user_id">-1</value>
+            <value description="role_id">-2</value>
+        </row>
+        <row>
+            <value description="user_id">-2</value>
+            <value description="role_id">-1</value>
+        </row>
+        <row>
+            <value description="user_id">-3</value>
+            <value description="role_id">-1</value>
+        </row>
+        <row>
+            <value description="user_id">-3</value>
+            <value description="role_id">-2</value>
+        </row>
+    </table>
+    <table name="family">
+        <column>familyID</column>
+        <column>headOfFamilyPersonID</column>
+        <column>churchID</column>
+        <column>familyName</column>
+        <column>homeAddress</column>
+        <column>homeAddress2</column>
+        <column>homeCity</column>
+        <column>homeState</column>
+        <column>homeZip</column>
+        <column>country</column>
+        <column>homePhone</column>
+        <column>homeFax</column>
+        <column>newsletter</column>
+        <column>lastModified</column>
+        <column>misc1</column>
+        <column>misc2</column>
+        <column>misc3</column>
+        <column>otherCountry</column>
+        <column>otherState</column>
+        <column>ucCountry</column>
+        <column>ucState</column>
+        <column>hotel</column>
+        <row>
+            <value description="familyID">100</value>
+            <value description="headOfFamilyPersonID">44</value>
+            <value description="churchID">10</value>
+            <value description="familyName">Lanford</value>
+            <value description="homeAddress">234 Walnut Stree</value>
+            <value description="homeAddress2"></value>
+            <value description="homeCity">Schaumburg</value>
+            <value description="homeState">IL</value>
+            <value description="homeZip">60173</value>
+            <value description="country">US</value>
+            <value description="homePhone">8471234567</value>
+            <value description="homeFax">8471234566</value>
+            <value description="newsletter">1</value>
+            <value description="lastModified">2015-05-06 00:00:00</value>
+            <value description="misc1">chehhoo@netzero.net</value>
+            <value description="misc2">chehhoo@netzero.net</value>
+            <value description="misc3">NONE</value>
+            <value description="otherCountry"></value>
+            <value description="otherState"></value>
+            <value description="ucCountry"></value>
+            <value description="ucState"></value>
+            <value description="hotel">0</value>
+        </row>
+    </table>
+    <table name="person">
+        <column>personID</column>    
+        <column>acceptedChrist</column>        
+        <column>acceptedChristDate</column>    
+        <column>acceptedChristLocation</column>        
+        <column>age</column>    
+        <column>baptized</column>        
+        <column>baptizedDate</column>       
+        <column>cellPhone</column>        
+        <column>chineseName</column>    
+        <column>churchAdmin</column>    
+        <column>churchID</column>        
+        <column>commitServe</column>        
+        <column>email</column>    
+        <column>familyAdmin</column>    
+        <column>familyID</column>        
+        <column>firstName</column>        
+        <column>gender</column>                
+        <column>lastModified</column>        
+        <column>lastName</column>        
+        <column>loginID</column>        
+        <column>misc1</column>        
+        <column>misc2</column>        
+        <column>misc3</column>        
+        <column>password</column>        
+        <column>phone</column>        
+        <column>prc</column>        
+        <column>preferredLanguage</column>        
+        <column>relationship</column>        
+        <column>remarks</column>    
+        <column>searchable</column>    
+        <column>seeker</column>        
+        <column>servingRole</column>        
+        <column>status</column>        
+        <column>title</column>    
+        <column>volunteerCode</column>    
+        <column>willingToAttendCCCMTraining</column>    
+        <column>willingToBeVolunteer</column>    
+        <column>workPhone</column>
+        <column>headphone</column>
+        <column>healthCardNo</column>
+        <column>allergies</column>      
+        <row>
+            <value description="personID">44</value>    
+            <value description="acceptedChrist">1</value>        
+            <value description="acceptedChristDate">1989-02-04 00:00:00</value>    
+            <value description="acceptedChristLocation">1</value>        
+            <value description="age">A4</value>    
+            <value description="baptized">1</value>        
+            <value description="baptizedDate">1989-04-01 00:00:00</value>       
+            <value description="cellPhone">8473193013</value>        
+            <value description="chineseName">李梁谷</value>    
+            <value description="churchAdmin">1</value>    
+            <value description="churchID">10</value>        
+            <value description="commitServe"></value>        
+            <value description="email">chehhoo@netzero.net</value>    
+            <value description="familyAdmin">1</value>    
+            <value description="familyID">100</value>        
+            <value description="firstName">Tim</value>        
+            <value description="gender">M</value>                
+            <value description="lastModified">2015-05-06 00:00:00</value>        
+            <value description="lastName">Langford</value>        
+            <value description="loginID"></value>        
+            <value description="misc1"></value>        
+            <value description="misc2"></value>        
+            <value description="misc3"></value>        
+            <value description="password">test123$</value>        
+            <value description="phone">8473193013</value>        
+            <value description="prc"></value>        
+            <value description="preferredLanguage">M</value>        
+            <value description="relationship">P</value>        
+            <value description="remarks">Artist</value>    
+            <value description="searchable">1</value>    
+            <value description="seeker">0</value>        
+            <value description="servingRole">T</value>        
+            <value description="status">O</value>        
+            <value description="title"></value>    
+            <value description="volunteerCode">0</value>    
+            <value description="willingToAttendCCCMTraining">0</value>    
+            <value description="willingToBeVolunteer">0</value>    
+            <value description="workPhone">8473193013</value>
+            <value description="headphone">N</value>
+            <value description="healthCardNo">A13241141</value>
+            <value description="allergies">N</value>          
+        </row> 
+    </table>
+</dataset>

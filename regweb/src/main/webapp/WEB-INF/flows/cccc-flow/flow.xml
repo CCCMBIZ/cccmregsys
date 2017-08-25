@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="
+		http://www.springframework.org/schema/webflow 
+		http://www.springframework.org/schema/webflow/spring-webflow.xsd">
+
+    <var class="biz.cccm.registration.domain.RegistrationForm"
+         name="form" />
+    
+    <on-start>
+        <evaluate expression="registrationController.initializeForm()" result="form" />
+    </on-start>
+    
+    <view-state id="step1" model="form" view="cccc/step1">
+        <transition on="next" to="step2"/> 
+        <transition on="cancel" to="step1CancelDialog" validate="false"/>
+        <transition on="loadchurch" validate="false" >
+            <set name="viewScope.churchStateId" value="requestParameters.churchStateId"/>
+            <evaluate expression="registrationController.populateChurchList(form, viewScope.churchStateId)"></evaluate>
+        </transition>
+    </view-state>
+
+    <subflow-state id="step1CancelDialog" subflow="popup-flow">
+        <transition on="return" to="step1"/>
+        <transition on="continue" to="cancel" />
+    </subflow-state>
+    
+    <view-state id="step2" model="form" view="cccc/step2">
+        <transition on="previous" to="step1" validate="false"/>
+        <transition on="next" to="step3"/> 
+        <transition on="cancel" to="step2CancelDialog" validate="false"/>
+    </view-state>
+    
+    <subflow-state id="step2CancelDialog" subflow="popup-flow">
+        <transition on="return" to="step2"/>
+        <transition on="continue" to="cancel"/>
+    </subflow-state>
+
+    <view-state id="step3" model="form" view="cccc/step3">
+        <transition on="previous" to="step2" validate="false"/>
+        <transition on="next" to="volunteerOrNot"/> 
+        <transition on="cancel" to="step3CancelDialog" validate="false"/>
+        <transition on="add" to="addNewPerson" validate="false"/> 
+        <transition on="delete" to="deletePerson" validate="false"/> 
+    </view-state>
+    
+    <action-state id="addNewPerson">
+        <evaluate expression="registrationController.createNewPerson(flowScope.form)" />
+        <transition to="step3" />
+    </action-state>
+    
+    <action-state id="deletePerson">
+        <evaluate expression="registrationController.deletePerson(flowScope.form, currentEvent.attributes)" />
+        <transition to="step3" />
+    </action-state>
+    
+    <subflow-state id="step3CancelDialog" subflow="popup-flow">
+        <transition on="return" to="step3"/>
+        <transition on="continue" to="cancel"/>
+    </subflow-state>
+    
+    <decision-state id="volunteerOrNot">
+        <if test="form.misc1 == true" then="volunteer" else="mealPlan" />
+    </decision-state>
+    
+    <view-state id="volunteer" model="form" view="cccc/volunteer">
+        <transition on="previous" to="step3" validate="false"/>
+        <transition on="next" to="mealPlan"/> 
+        <transition on="cancel" to="volunteerCancelDialog" validate="false"/>
+    </view-state>
+    
+    <subflow-state id="volunteerCancelDialog" subflow="popup-flow">
+        <transition on="return" to="volunteer"/>
+        <transition on="continue" to="cancel"/>
+    </subflow-state>
+    
+    <view-state id="mealPlan" model="form" view="cccc/mealPlan">
+        <transition on="previous" to="step3" validate="false"/>
+        <transition on="next" to="seminarOrNot"/> 
+        <transition on="cancel" to="mealPlanCancelDialog" validate="false"/>
+    </view-state>
+    
+    <subflow-state id="mealPlanCancelDialog" subflow="popup-flow">
+        <transition on="return" to="mealPlan"/>
+        <transition on="continue" to="cancel"/>
+    </subflow-state>
+    
+    <decision-state id="seminarOrNot">
+        <if test="registrationController.isSeminarSignup(form.registrants) == true" then="seminar" else="calculateFee" />
+    </decision-state>
+    
+    <view-state id="seminar" model="form" view="cccc/seminar">
+        <transition on="previous" to="mealPlan" validate="false"/>
+        <transition on="next" to="calculateFee"/> 
+        <transition on="cancel" to="seminarCancelDialog" validate="false"/>
+    </view-state>
+    
+    <subflow-state id="seminarCancelDialog" subflow="popup-flow">
+        <transition on="return" to="seminar"/>
+        <transition on="continue" to="cancel"/>
+    </subflow-state>
+    
+    <action-state id="calculateFee">
+        <evaluate expression="registrationController.generateReview(form)"  />
+        <transition to="review" />
+    </action-state>
+    
+    <view-state id="review" model="form" view="cccc/review">
+        <transition on="previous" to="mealPlan" validate="false"/>
+        <transition on="next" to="payment"/>
+        <transition on="cancel" to="reviewCancelDialog" validate="false"/>
+        <transition on="success" to="success"/>
+    </view-state>
+
+    <subflow-state id="reviewCancelDialog" subflow="popup-flow">
+        <transition on="return" to="review"/>
+        <transition on="continue" to="cancel"/>
+    </subflow-state>
+    
+    <decision-state id="payment">
+        <if test="form.paymentMethod == form.paymentMethod.PERSONAL_CHECK" then="prepareCheck"/>
+        <if test="form.paymentMethod == form.paymentMethod.CREDIT_CARD" then="prepareCredit"/>
+    </decision-state>
+
+    <action-state id="prepareCredit">     
+        <evaluate expression="registrationController.getPaymentProviderUrl(form)"
+                  result="flowScope.paymentUrl"/>
+        <transition to="confirmAndPayByCredit">
+            <evaluate expression="registrationController.createPaymentRequest(form,flowRequestContext)" result="flowScope.paymentProvider"/>
+        </transition>
+    </action-state>
+    
+    <action-state id="prepareCheck">
+        <evaluate expression="registrationController.submit(form)"/>
+        <transition to="confirmAndPayByCheck">
+            <evaluate expression="registrationController.sendMail(form)"/>
+        </transition>
+    </action-state>
+
+    <end-state id="confirmAndPayByCheck" view="cccc/confirmAndPayByCheck" />
+    
+    <view-state id="confirmAndPayByCredit" model="form" view="cccc/confirmAndPayByCredit">
+    </view-state>
+
+    <end-state id="success" view="cccc/success"/>
+    <end-state id="cancel" view="cccc/cancel"/>
+
+</flow>

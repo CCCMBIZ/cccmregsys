@@ -1,0 +1,21 @@
+<!-- NOTE: If you're working offline, you might have to change the DOCTYPE to the following:
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">-->
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+
+<hibernate-configuration>
+    <session-factory>
+        <mapping class="biz.cccm.model.User"/>
+        <mapping class="biz.cccm.model.Role"/>
+        <mapping class="biz.cccm.mgmt.registration.model.Family"/>
+        <mapping class="biz.cccm.mgmt.registration.model.Person"/>
+        <mapping class="biz.cccm.mgmt.registration.model.Profile"/>
+        <mapping class="biz.cccm.mgmt.registration.model.Payment"/>
+        <mapping class="biz.cccm.mgmt.registration.model.Mealplan"/>
+        <mapping class="biz.cccm.mgmt.registration.model.Church"/>      
+        <mapping class="biz.cccm.mgmt.registration.model.Registrant"/> 
+        <mapping class="biz.cccm.mgmt.registration.model.Mealtracker"/>
+    </session-factory>
+</hibernate-configuration>

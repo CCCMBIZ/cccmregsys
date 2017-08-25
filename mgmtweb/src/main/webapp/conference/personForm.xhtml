@@ -1,0 +1,454 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <ui:composition template="/layouts/default.xhtml">
+        <ui:define name="title">#{text['person.title']}</ui:define>
+        <ui:param name="menu" value="UserMenu"/>
+
+        <ui:define name="body">
+            <c:set var="delObject" value="#{text['personList.person']}"/>
+            <script type="text/javascript">var msgDelConfirm =
+                        "<h:outputFormat value="#{text['delete.confirm']}"><f:param value="#{delObject}" /></h:outputFormat>";</script>
+
+            <div class="col-sm-2">
+                <h2>#{text['person.heading']}</h2>
+                <h:outputText value="#{text['person.message']}"/>
+            </div>
+            <div class="col-sm-7">
+                <h:form id="personForm" styleClass="well"  >
+                    <div class="row">
+                        <div class="col-sm-6 form-group">
+                            <h:outputLabel styleClass="control-label" for="registrationID" value="#{text['registrant.registrationID']}"/>
+                            <h:outputText id="registrationID" value="#{personForm.profile.registrationID}"/>
+                            <p:message for="registrationID"/>
+                        </div>
+                        <div class="col-sm-6 form-group">
+                            <h:outputLabel styleClass="control-label" for="registeredDate" value="#{text['registrant.registeredDate']}"/>
+                            <h:outputText value="#{personForm.profile.registeredDate}" id="registeredDate">
+                                <f:convertDateTime type="date" pattern="yyyy-MM-dd HH:mm:ss"/>
+                            </h:outputText>
+                            <p:message for="registeredDate"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 form-group">
+                            <h:outputLabel styleClass="control-label" for="profilePersonID" value="#{text['registrant.personID']}"/>
+                            <h:outputText id="profilePersonID" value="#{personForm.profile.personID}" />
+                            <p:message for="profilePersonID"/>
+                        </div>
+                        <div class="col-sm-6 form-group">
+                            <h:outputLabel styleClass="control-label" for="familyID" value="#{text['registrant.familyID']}"/>
+                            <h:inputText id="familyID" value="#{personForm.person.familyID}" />
+                            <p:message for="familyID"/>
+                        </div>
+                    </div>
+                    <legend><h:outputText value="#{text['legend.person.information']}"/></legend>
+                    <div class="form-group">
+                        <h:outputLabel styleClass="control-label" for="churchName" value="#{text['registrant.churchName']}"/>
+                        <h:outputText styleClass="form-control" value="#{personForm.profile.churchName}" id="churchName"/>
+                        <p:message for="churchName"/>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 form-group">
+                            <h:outputLabel styleClass="control-label" for="firstName" value="#{text['person.firstName']}"/>
+                            <h:inputText styleClass="form-control" id="firstName" value="#{personForm.person.firstName}" maxlength="50" required="true"/>
+                            <p:message for="firstName"/>
+                        </div>
+                        <div class="col-sm-6 form-group">
+                            <h:outputLabel styleClass="control-label" for="lastName" value="#{text['person.lastName']}"/>
+                            <h:inputText styleClass="form-control" value="#{personForm.person.lastName}" id="lastName" maxlength="50" required="true"/>
+                            <p:message for="lastName"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 form-group">
+                            <h:outputLabel styleClass="control-label" for="chineseName" value="#{text['person.chineseName']}"/>
+                            <h:inputText styleClass="form-control" id="chineseName" value="#{personForm.person.chineseName}" maxlength="50" />
+                            <p:message for="chineseName"/>
+                        </div>
+                        <div class="col-sm-6 form-group">
+                            <h:outputLabel styleClass="control-label" for="gender" value="#{text['person.gender']}"/>
+                            <h:selectOneRadio  styleClass="form-control" value="#{personForm.person.gender}" id="gender">
+                                <f:selectItem  itemLabel="M" itemValue="M" />
+                                <f:selectItem  itemLabel="F" itemValue="F" />
+                            </h:selectOneRadio>
+                            <p:message for="gender"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3 form-group">
+                            <h:outputLabel styleClass="control-label" for="age" value="#{text['person.age']}">
+                                <h:selectOneMenu value="#{personForm.person.age}" id="age" styleClass="form-control" style="height: 38px"> 
+                                    <f:selectItems value="#{personForm.ageGroup}"/> </h:selectOneMenu>
+                            </h:outputLabel>
+                        </div>
+                        <div class="col-sm-3 form-group">
+                            <h:outputLabel styleClass="control-label" for="status" value="#{text['person.status']}">
+                                <h:selectOneMenu value="#{personForm.person.status}" id="status" styleClass="form-control" style="height: 38px"> 
+                                    <f:selectItems value="#{personForm.statusGroup}"/> </h:selectOneMenu>
+                            </h:outputLabel>
+                        </div>
+                        <div class="col-sm-3 form-group">
+                            <h:outputLabel styleClass="control-label" for="acceptedChrist" value="#{text['person.acceptedChrist']}"/>
+                            <h:selectOneRadio  styleClass="form-control" value="#{personForm.person.acceptedChrist}" id="acceptedChrist">
+                                <f:selectItem  itemLabel="Yes" itemValue="1" />
+                                <f:selectItem  itemLabel="No" itemValue="0" />
+                            </h:selectOneRadio>
+                            <p:message for="acceptedChrist"/>
+                        </div>
+                        <div class="col-sm-3 form-group">
+                            <h:outputLabel styleClass="control-label" for="preferredLanguage" value="#{text['person.preferredLanguage']}">
+                                <h:selectOneMenu value="#{personForm.person.preferredLanguage}" id="preferredLanguage" styleClass="form-control" style="height: 38px"> 
+                                    <f:selectItems value="#{personForm.languageList}"/> </h:selectOneMenu>
+                            </h:outputLabel>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <h:outputLabel styleClass="control-label" for="misc1" value="#{text['person.misc1']}"/>
+                        <h:inputText styleClass="form-control" value="#{personForm.family.misc1}" id="misc1" required="true"/>
+                        <p:message for="misc1"/>
+                    </div>
+                    <div class="form-group">
+                        <h:outputLabel styleClass="control-label" for="volunteerJobs" value="#{text['registrant.volunteerJobs']}"/>
+                        <h:inputText styleClass="form-control" value="#{personForm.profile.volunteerJobs}" id="volunteerJobs"/>
+                        <p:message for="volunteerJobs"/>
+                    </div>
+                    <fieldset>
+                        <legend class="accordion-heading">
+                            <h:outputText value="#{text['person.address']}"/>
+                        </legend>
+                        <div id="address" class="accordion-body">
+                            <div class="form-group">
+                                <h:outputLabel styleClass="control-label" for="homeAddress" value="#{text['user.address.address']}"/>
+                                <h:inputText styleClass="form-control" value="#{personForm.family.homeAddress}" id="homeAddress"/>
+                                <p:message for="homeAddress"/>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-7 form-group">
+                                    <h:outputLabel styleClass="control-label" for="city" value="#{text['user.address.city']}"/>
+                                    <h:inputText styleClass="form-control" value="#{personForm.family.homeCity}" id="city"/>
+                                    <p:message for="city"/>
+                                </div>
+                                <div class="col-sm-2 form-group">
+                                    <h:outputLabel styleClass="control-label" for="homeState" value="#{text['user.address.province']}"/>
+                                    <h:inputText styleClass="form-control" value="#{personForm.family.homeState}" id="homeState"/>
+                                    <p:message for="homeState"/>
+                                </div>
+                                <div class="col-sm-3 form-group">
+                                    <h:outputLabel styleClass="control-label" for="postalCode" value="#{text['user.address.postalCode']}"/>
+                                    <h:inputText styleClass="form-control" value="#{personForm.family.homeZip}" id="postalCode">
+                                        <f:validateRegex pattern="^\d{5}\d*$"/>
+                                    </h:inputText>
+                                    <p:message for="postalCode"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6 form-group">
+                                    <h:outputLabel styleClass="control-label" for="homePhone" value="#{text['user.phoneNumber']}"/>
+                                    <h:inputText styleClass="form-control" value="#{personForm.family.homePhone}" id="homePhone"/>
+                                    <p:message for="homePhone"/>
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <h:outputLabel styleClass="control-label" for="email" value="#{text['user.email']}"/>
+                                    <h:inputText styleClass="form-control" value="#{personForm.family.misc1}" id="email"/>
+                                    <p:message for="email"/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <h:panelGroup styleClass="form-group" layout="block">
+                        <fieldset>
+                            <legend><h:outputText value="#{text['registrant.workshop']}"/></legend>
+                            <h:outputLabel styleClass="control-label" for="workshop1" value="#{text['registrant.workshop1']}">
+                                <h:inputText  styleClass="form-control"  value="#{personForm.profile.workshop1}" id="workshop1" maxlength="5"/>
+                            </h:outputLabel>
+
+                            <h:outputLabel styleClass="control-label" for="workshop2" value="#{text['registrant.workshop2']}">
+                                <h:inputText  styleClass="form-control"  value="#{personForm.profile.workshop2}" id="workshop2" maxlength="5"/>
+                            </h:outputLabel>
+                        </fieldset>
+                    </h:panelGroup>
+
+                    <h:panelGroup styleClass="form-group" layout="block">
+                        <fieldset>
+                            <legend><h:outputText value="#{text['mealplan.firstday']}"/></legend>
+                            <h:outputLabel styleClass="control-label" for="breakfast1" value="#{text['mealplan.breakfast1']}">
+                                <h:selectOneMenu value="#{personForm.mealplan.breakfast1}" id="breakfast1" styleClass="form-control" style="height: 38px">
+                                    <f:selectItems value="#{mealplanForm.quantities}"/> </h:selectOneMenu>
+                            </h:outputLabel>
+
+                            <h:outputLabel styleClass="control-label" for="lunch1" value="#{text['mealplan.lunch1']}">
+                                <h:selectOneMenu value="#{personForm.mealplan.lunch1}" id="lunch1" styleClass="form-control" style="height: 38px"> 
+                                    <f:selectItems value="#{mealplanForm.quantities}"/> </h:selectOneMenu>
+                            </h:outputLabel>
+
+                            <h:outputLabel styleClass="control-label" for="dinner1" value="#{text['mealplan.dinner1']}">
+                                <h:selectOneMenu value="#{personForm.mealplan.dinner1}" id="dinner1" styleClass="form-control" style="height: 38px"> 
+                                    <f:selectItems value="#{mealplanForm.quantities}"/> </h:selectOneMenu>
+                            </h:outputLabel>
+                        </fieldset>
+                    </h:panelGroup>
+                    <h:panelGroup styleClass="form-group" layout="block">
+                        <fieldset>
+                            <legend><h:outputText value="#{text['mealplan.secondday']}"/></legend>
+                            <h:outputLabel styleClass="control-label" for="breakfast2" value="#{text['mealplan.breakfast2']}">
+                                <h:selectOneMenu value="#{personForm.mealplan.breakfast2}" id="breakfast2" styleClass="form-control" style="height: 38px"> 
+                                    <f:selectItems value="#{mealplanForm.quantities}"/> 
+                                </h:selectOneMenu>
+                            </h:outputLabel>
+
+                            <h:outputLabel styleClass="control-label" for="lunch2" value="#{text['mealplan.lunch2']}">
+                                <h:selectOneMenu value="#{personForm.mealplan.lunch2}" id="lunch2" styleClass="form-control" style="height: 38px"> 
+                                    <f:selectItems value="#{mealplanForm.quantities}"/> 
+                                </h:selectOneMenu>
+                            </h:outputLabel>
+
+                            <h:outputLabel styleClass="control-label" for="dinner2" value="#{text['mealplan.dinner2']}">
+                                <h:selectOneMenu value="#{personForm.mealplan.dinner2}" id="dinner2" styleClass="form-control" style="height: 38px"> 
+                                    <f:selectItems value="#{mealplanForm.quantities}"/> 
+                                </h:selectOneMenu>
+                            </h:outputLabel>
+                        </fieldset>
+                    </h:panelGroup>
+                    <h:panelGroup styleClass="form-group" layout="block">
+                        <fieldset>
+                            <legend><h:outputText value="#{text['mealplan.thirdday']}"/></legend>
+                            <h:outputLabel styleClass="control-label" for="breakfast3" value="#{text['mealplan.breakfast3']}">
+                                <h:selectOneMenu value="#{personForm.mealplan.breakfast3}" id="breakfast3" styleClass="form-control" style="height: 38px">
+                                    <f:selectItems value="#{mealplanForm.quantities}"/> 
+                                </h:selectOneMenu>
+                            </h:outputLabel>
+
+                            <h:outputLabel styleClass="control-label" for="lunch3" value="#{text['mealplan.lunch3']}">
+                                <h:selectOneMenu value="#{personForm.mealplan.lunch3}" id="lunch3" styleClass="form-control" style="height: 38px"> 
+                                    <f:selectItems value="#{mealplanForm.quantities}"/> 
+                                </h:selectOneMenu>
+                            </h:outputLabel>
+
+                            <h:outputLabel styleClass="control-label" for="dinner3" value="#{text['mealplan.dinner3']}">
+                                <h:selectOneMenu value="#{personForm.mealplan.dinner3}" id="dinner3" styleClass="form-control" style="height: 38px">
+                                    <f:selectItems value="#{mealplanForm.quantities}"/> 
+                                </h:selectOneMenu>
+                            </h:outputLabel>
+                        </fieldset>
+                    </h:panelGroup>
+                    <h:panelGroup styleClass="form-group" layout="block">
+                        <fieldset>
+                            <legend><h:outputText value="#{text['mealplan.fourthday']}"/></legend>
+                            <h:outputLabel styleClass="control-label" for="breakfast4" value="#{text['mealplan.breakfast4']}">
+                                <h:selectOneMenu value="#{personForm.mealplan.breakfast4}" id="breakfast4" styleClass="form-control" style="height: 38px">
+                                    <f:selectItems value="#{mealplanForm.quantities}"/> 
+                                </h:selectOneMenu>
+                            </h:outputLabel>
+
+                            <h:outputLabel styleClass="control-label" for="lunch4" value="#{text['mealplan.lunch4']}">
+                                <h:selectOneMenu value="#{personForm.mealplan.lunch4}" id="lunch4" styleClass="form-control" style="height: 38px"> 
+                                    <f:selectItems value="#{mealplanForm.quantities}"/> 
+                                </h:selectOneMenu>
+                            </h:outputLabel>
+
+                            <h:outputLabel styleClass="control-label" for="dinner4" value="#{text['mealplan.dinner4']}">
+                                <h:selectOneMenu value="#{personForm.mealplan.dinner4}" id="dinner4" styleClass="form-control" style="height: 38px"> 
+                                    <f:selectItems value="#{mealplanForm.quantities}"/> 
+                                </h:selectOneMenu>
+                            </h:outputLabel>
+                        </fieldset>
+                    </h:panelGroup>
+                    <h:panelGroup styleClass="form-group" layout="block">
+                        <fieldset>
+                            <legend><h:outputText value="#{text['mealplan.fifthday']}"/></legend>
+                            <h:outputLabel styleClass="control-label" for="breakfast5" value="#{text['mealplan.breakfast5']}">
+                                <h:selectOneMenu value="#{personForm.mealplan.breakfast5}" id="breakfast5" styleClass="form-control" style="height: 38px">
+                                    <f:selectItems value="#{mealplanForm.quantities}"/> 
+                                </h:selectOneMenu>
+                            </h:outputLabel>
+
+                            <h:outputLabel styleClass="control-label" for="lunch5" value="#{text['mealplan.lunch5']}">
+                                <h:selectOneMenu value="#{personForm.mealplan.lunch5}" id="lunch5" styleClass="form-control" style="height: 38px">
+                                    <f:selectItems value="#{mealplanForm.quantities}"/> 
+                                </h:selectOneMenu>
+                            </h:outputLabel>
+
+                            <h:outputLabel styleClass="control-label" for="dinner5" value="#{text['mealplan.dinner5']}">
+                                <h:selectOneMenu value="#{personForm.mealplan.dinner5}" id="dinner5" styleClass="form-control" style="height: 38px">
+                                    <f:selectItems value="#{mealplanForm.quantities}"/> 
+                                </h:selectOneMenu>
+                            </h:outputLabel>
+                        </fieldset>
+                    </h:panelGroup>  
+                    <h:panelGroup styleClass="form-group" layout="block">
+                        <legend><h:outputText value="#{text['legend.person.fee']}"/></legend>
+                        <div class="col-sm-3 form-group">
+                            <h:outputLabel styleClass="control-label" for="registrationFee" value="#{text['registrant.registrationFee']}">
+                                <h:outputText  styleClass="form-control"  value="$#{personForm.payment.registrationFee}" id="registrationFee"/>
+                            </h:outputLabel>
+                        </div>
+                        <div class="col-sm-6 form-group">
+                            <h:outputLabel styleClass="control-label" for="mealFee" value="$#{text['registrant.mealFee']}">
+                                <h:outputText  styleClass="form-control"  value="$#{personForm.payment.mealFee}" id="mealFee"/>
+                            </h:outputLabel>
+                        </div>
+                    </h:panelGroup>
+                    <h:panelGroup styleClass="form-group" layout="block">
+                        <legend><h:outputText value="#{text['legend.person.payment']}"/></legend>
+                        <c:forEach var="payment" items="#{personForm.payments}" varStatus="status">
+                            <div class="row">
+                                <div class="col-sm-3 form-group">
+                                    <h:outputLabel styleClass="control-label" for="amount" value="#{text['payment.amount']}">
+                                        <h:outputText styleClass="form-control" value="$#{payment.amount}" id="amount"/>
+                                    </h:outputLabel>
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <h:outputLabel styleClass="control-label" for="referenceNumber" value="#{text['payment.referenceNumber']}">
+                                        <h:outputText styleClass="form-control" value="#{payment.referenceNumber}" id="referenceNumber"/>
+                                    </h:outputLabel>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <h:outputLabel styleClass="control-label" for="remarks" value="#{text['payment.remarks']}"/>
+                                <h:inputTextarea styleClass="form-control" value="#{payment.remarks}" id="remarks"/>
+                                <p:message for="remarks"/>
+                            </div>
+                            <hr/>
+                        </c:forEach>
+                    </h:panelGroup>
+                    <!-- Family attributes -->
+                    <h:inputHidden value="#{personForm.family.familyID}" id="mainFamilyID"/>
+                    <h:inputHidden value="#{personForm.family.misc2}" id="misc2"/>
+                    <!-- Person attributes -->
+                    <!--
+                    <h:inputHidden value="#{personForm.person.familyID}" id="familyID"/>
+                    <h:inputHidden value="#{personForm.person.acceptedChrist}" id="acceptedChrist"/>
+                    -->
+                    <h:inputHidden value="#{personForm.person.personID}" id="personID"/>
+                    <h:inputHidden value="#{personForm.person.relationship}" id="relationship"/>
+                    <h:inputHidden value="#{personForm.person.headphone}" id="headphone"/>
+                    <h:inputHidden value="#{personForm.person.healthCardNo}" id="healthCardNo"/>
+                    <h:inputHidden value="#{personForm.person.lastModified}" id="lastModified">
+                        <f:convertDateTime type="date" pattern="yyyy-MM-dd HH:mm:ss.S"/>
+                    </h:inputHidden> 
+                    <!-- Profile attributes -->
+
+                    <h:inputHidden value="#{personForm.profile.personID}"/>
+                    <h:inputHidden value="#{personForm.profile.leader}" id="leader"/>
+                    <h:inputHidden value="#{personForm.profile.decision}" id="decision"/>
+                    <h:inputHidden value="#{personForm.profile.seeker}" id="seeker"/>
+                    <h:inputHidden value="#{personForm.profile.churchID}" id="churchID"/>
+                    <h:inputHidden value="#{personForm.profile.roomID}" id="roomID"/>
+                    <h:inputHidden value="#{personForm.profile.groupID}" id="groupID"/>
+                    <h:inputHidden value="#{personForm.profile.comments}" id="comments"/>
+                    <!-- FIXME: Null Converter issue
+                    <h:inputHidden value="#{personForm.profile.checkIn}" id="checkIn"/>
+                    <h:inputHidden value="#{personForm.profile.checkInDate}" id="checkInDate"/>
+                    <h:inputHidden value="#{personForm.profile.checkOut}" id="checkOut"/>
+                    <h:inputHidden value="#{personForm.profile.checkOutDate}" id="checkOutDate"/>
+                    -->
+
+                    <h:inputHidden value="#{personForm.profile.registeredDate}" id="profileRegisteredDate">
+                        <f:convertDateTime type="date" pattern="yyyy-MM-dd HH:mm:ss"/>
+                    </h:inputHidden>
+
+                    <h:inputHidden value="#{personForm.profile.nametag}" id="nametag"/>
+                    <h:inputHidden value="#{personForm.profile.archive}" id="archive"/>
+
+                    <h:inputHidden value="#{personForm.profile.preferredLanguage}" id="profilePreferredLanguage"/>
+
+                    <h:inputHidden value="#{personForm.profile.faithYear}" id="faithYear"/>
+                    <h:inputHidden value="#{personForm.profile.workshop}" id="workshop"/>
+                    <!--
+                    <h:inputHidden value="#{personForm.profile.workshop1}" id="workshop1"/>
+                    <h:inputHidden value="#{personForm.profile.workshop2}" id="workshop2"/>
+                    -->
+                    <h:inputHidden value="#{personForm.profile.lastModified}" id="profileLastModified">
+                        <f:convertDateTime type="date" pattern="yyyy-MM-dd HH:mm:ss"/>
+                    </h:inputHidden>
+                    <h:inputHidden value="#{personForm.profile.familyID}" id="profileFamilyID"/>
+
+                    <h:inputHidden value="#{personForm.profile.registrationID}" id="profileRegistrationID"/>
+
+                    <h:inputHidden value="#{personForm.profile.needTranspotation}" id="needTranspotation"/>
+                    <h:inputHidden value="#{personForm.profile.needHotel}" id="needHotel"/>
+                    <!--
+                    <h:inputHidden value="#{personForm.profile.volunteerJobs}" id="volunteerJobs"/>
+                    -->
+                    <!--
+                    <h:inputHidden value="#{personForm.profile.churchName}" id="churchName"/><br/>
+                    -->
+                    <!-- Mealplan attributes --><br/>
+                    <h:inputHidden value="#{personForm.mealplan.registrationID}"/>
+
+
+                    <!-- Family attributes --><br/>
+                    '${personForm.family.familyID}'<br/>
+                    '${personForm.family.misc2}'<br/>
+                    <!-- Person attributes --><br/>
+                    '${personForm.person.familyID}'<br/>
+                    '${personForm.person.acceptedChrist}'<br/>
+
+                    '${personForm.person.personID}'<br/>
+                    '${personForm.person.relationship}'<br/>
+                    '${personForm.person.headphone}'<br/>
+                    '${personForm.person.healthCardNo}'<br/>
+                    '${personForm.person.lastModified}'<br/>
+                    <br/>
+                    <br/>
+                    <!-- Profile attributes --><br/>
+                    '${personForm.profile.personID}'<br/>
+                    '${personForm.profile.leader}'<br/>
+                    '${personForm.profile.decision}'<br/>
+                    '${personForm.profile.seeker}'<br/>
+                    '${personForm.profile.churchID}'<br/>
+                    '${personForm.profile.roomID}'<br/>
+                    '${personForm.profile.groupID}'<br/>
+                    '${personForm.profile.comments}'<br/>
+
+                    '${personForm.profile.checkIn}'<br/>
+                    '${personForm.profile.checkInDate}'<br/>
+                    '${personForm.profile.checkOut}'<br/>
+                    '${personForm.profile.checkOutDate}'<br/>
+                    '${personForm.profile.registeredDate}'<br/>
+
+                    '${personForm.profile.nametag}'<br/>
+                    '${personForm.profile.archive}'<br/>
+
+                    '${personForm.profile.preferredLanguage}'<br/>
+
+                    '${personForm.profile.faithYear}'<br/>
+                    '${personForm.profile.workshop}'<br/>
+
+                    '${personForm.profile.workshop1}'<br/>
+                    '${personForm.profile.workshop2}'<br/>
+                    <br/>
+                    '${personForm.profile.lastModified}'<br/>
+
+                    '${personForm.profile.familyID}'<br/>
+
+                    '${personForm.profile.registrationID}'<br/>
+                    <br/>
+                    '${personForm.profile.needTranspotation}'<br/>
+                    '${personForm.profile.needHotel}'<br/>
+
+                    '${personForm.profile.volunteerJobs}'<br/>
+
+                    '${personForm.profile.churchName}'<br/>
+
+                    <!-- Mealplan attributes --><br/>
+                    '${personForm.mealplan.registrationID}'<br/>
+
+                    <div class="form-group form-actions">
+                        <h:commandButton value="#{text['button.save']}" action="#{personForm.save}" styleClass="btn btn-primary"/>
+                        <h:commandButton value="#{text['button.delete']}" action="#{personForm.delete}"
+                                         styleClass="btn btn-default" onclick="return confirmMessage(msgDelConfirm)"/>
+
+                        <h:commandButton value="#{text['button.cancel']}" action="#{personForm.cancel}" immediate="true"
+                                         styleClass="btn btn-default"/>
+                    </div>
+                    <div class="form-group form-horizontal form-actions">
+                        <h:commandButton value="#{text['button.nametag']}" action="#{personForm.nametag}"  styleClass="btn btn-default"/>
+                    </div>
+                </h:form>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>

@@ -1,0 +1,119 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/layouts/default.xhtml">
+        <ui:define name="title">#{text['registrantList.title']}</ui:define>
+
+        <ui:define name="body">
+            <div class="span10">
+                <h2>#{text['registrantList.heading']}</h2>
+                <h:form id="searchForm" styleClass="form-search">
+                    <div id="search" class="input-append">
+                        <h:inputText id="q" size="20" value="#{registrantList.query}" styleClass="input-medium search-query"/>
+                        <h:commandButton styleClass="btn btn-default btn-sm" action="#{registrantList.search}" value="#{text['button.search']}"/>
+                    </div>
+                </h:form>
+                <h:form id="registrantList">
+                    <div id="actions" class="btn-group">
+                        <!-- <script> shows up here and causes square corners on the Add button below -->
+
+                        <h:commandButton action="#{personForm.add}" value="#{text['button.add']}" id="add"
+                                         styleClass="btn btn-primary">
+                            <f:param name="from" value="list"/>
+                        </h:commandButton>
+                        <h:commandButton value="#{text['button.done']}" action="home" id="cancel"
+                                         immediate="true" styleClass="btn">
+                        </h:commandButton>
+
+                        <h:commandButton action="#{registrantList.print}" value="#{text['button.nametag']}" id="nametag"  styleClass="btn">
+                        </h:commandButton>
+
+                    </div>
+
+                    <p:dataTable id="messages" var="person" value="#{registrantList.registrants}" sortBy="#{registrantList.sortColumn}" paginator="true" rows="30" 
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="10,30,50">
+                        <p:column style="width: 5%">
+                            <f:facet name="header">
+                                <p:column sortBy="personID" >
+                                    <h:outputText value="#{text['registrant.personID']}" />
+                                </p:column>
+                            </f:facet>
+                            <h:commandLink action="#{personForm.edit}" value="#{person.personID}" >
+                                <f:param name="id" value="#{person.personID}"/>
+                            </h:commandLink>
+                        </p:column>
+                        <p:column style="width: 10%">
+                            <f:facet name="header">
+                                <p:column sortBy="registrationID" >
+                                    <h:outputText value="#{text['registrant.registrationID']}" />
+                                </p:column>
+                            </f:facet>
+                            <h:outputText value="#{person.registrationID}" />
+                        </p:column>
+                        <p:column style="width: 10%">
+                            <f:facet name="header">
+                                <p:column sortBy="churchName" >
+                                    <h:outputText value="#{text['registrant.churchName']}" />
+                                </p:column>
+                            </f:facet>
+                            <h:outputText value="#{person.churchName}" />
+                        </p:column>
+                        <p:column style="width: 10%">
+                            <f:facet name="header">
+                                <p:column sortBy="chineseName" >
+                                    <h:outputText value="#{text['registrant.chineseName']}" />
+                                </p:column>
+                            </f:facet>
+                            <h:outputText value="#{person.chineseName}" />
+                        </p:column>
+                        <p:column style="width: 10%">
+                            <f:facet name="header">
+                                <p:column sortBy="firstName" >
+                                    <h:outputText value="#{text['registrant.firstName']}" />
+                                </p:column>
+                            </f:facet>
+                            <h:outputText value="#{person.firstName}" />
+                        </p:column>
+                        <p:column style="width: 10%">
+                            <f:facet name="header">
+                                <p:column sortBy="lastName" >
+                                    <h:outputText value="#{text['registrant.lastName']}" />
+                                </p:column>
+                            </f:facet>
+                            <h:outputText value="#{person.lastName}" />
+                        </p:column>
+                        <p:column style="width: 5%">
+                            <f:facet name="header">
+                                <p:column sortBy="age" >
+                                    <h:outputText value="#{text['registrant.age']}" />
+                                </p:column>
+                            </f:facet>
+                            <!--
+                            <h:selectBooleanCheckbox value="#{person.age}" id="age"/>
+                            -->
+                            <h:outputText rendered="#{person.age eq 'A2'}" value="18-29" /> 
+                            <h:outputText rendered="#{person.age eq 'A3'}" value="30-39" /> 
+                            <h:outputText rendered="#{person.age eq 'A4'}" value="40-49" /> 
+                            <h:outputText rendered="#{person.age eq 'A5'}" value="50-59" /> 
+                            <h:outputText rendered="#{person.age eq 'A6'}" value="60+" /> 
+                            <h:outputText rendered="#{person.age != 'A2' and person.age != 'A3' and person.age != 'A4' and person.age != 'A5' and person.age != 'A6'}" value="#{person.age}" /> 
+                        </p:column>
+                        <p:column style="width: 10%">
+                            <f:facet name="header">
+                                <p:column sortBy="preferredLanguage" >
+                                    <h:outputText value="#{text['registrant.preferredLanguage']}" />
+                                </p:column>
+                            </f:facet>
+                            <h:outputText rendered="#{person.preferredLanguage eq 'M'}" value="中文大会" /> 
+                            <h:outputText rendered="#{person.preferredLanguage eq 'E'}" value="GRACE Conference" /> 
+                            <h:outputText rendered="#{person.preferredLanguage eq 'C'}" value="1-5th" /> 
+                            <h:outputText rendered="#{person.preferredLanguage eq 'K'}" value="3yrs-K" /> 
+                            <h:outputText rendered="#{person.preferredLanguage eq 'T'}" value="1-2yrs" /> 
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>
