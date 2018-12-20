@@ -60,6 +60,7 @@ public class RegistrantList extends BasePage implements Serializable {
             for (Registrant reg : registrants) {
 
                 NameTag nameTag = new NameTag();
+                nameTag.setConferenceName("二零一八基督徒大會");
                 if (reg.getChineseName() != null && !reg.getChineseName().isEmpty()) {
                     nameTag.setChineseFullName(reg.getChineseName());
                 } else {
@@ -69,16 +70,41 @@ public class RegistrantList extends BasePage implements Serializable {
                 nameTag.setEnglishFullName(reg.getFirstName() + " " + reg.getLastName());
                 nameTag.setChruchName(reg.getChurchName());
                 nameTag.setCenterId(reg.getRegistrationID());
-                nameTag.setAddress(reg.getHomeCity() + "," + reg.getHomeState());
+                nameTag.setGroupId("");
                 nameTag.setBarcodeId(String.valueOf(reg.getPersonID()));
+
+                String topic = "" ;
+                if (reg.getWorkshop1() != null && !reg.getWorkshop1().isEmpty()) {
+                    String[] list = reg.getWorkshop1().split("\\|");
+                    for (String w : list) {
+                        if (w != null && !w.isEmpty()) {
+                            if (!topic.isEmpty()) {
+                                topic += "," ;
+                            }
+                            topic += w ;
+                        }
+                    }
+                }
+                if (reg.getWorkshop2() != null && !reg.getWorkshop2().isEmpty()) {
+                    String[] list = reg.getWorkshop2().split("\\|");
+                    for (String s : list) {
+                        if (s!= null && !s.isEmpty()) {
+                            if (!topic.isEmpty()) {
+                                topic += ",";
+                            }
+                            topic += s ;
+                        }
+                    }
+                }
+                nameTag.setTopic(topic);
                 
-                if (reg.getPreferredLanguage().equalsIgnoreCase("E")) {
+                if (reg.getPreferredLanguage() != null && reg.getPreferredLanguage().equalsIgnoreCase("E")) {
                     nameTag.setGrace(true);
                 }
                 printRequest.add(nameTag);
             }
             NameTagService nameTagService = new NameTagServiceImpl();
-            byte[] pdf = nameTagService.generateNameTagPrints(printRequest, 8);
+            byte[] pdf = nameTagService.generateNameTagPrints(printRequest, 1);
 
             HttpServletResponse response
                     = (HttpServletResponse) FacesContext.getCurrentInstance()

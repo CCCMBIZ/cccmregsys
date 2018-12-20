@@ -6,7 +6,7 @@
 
     <parent>
         <groupId>biz.cccm</groupId>
-        <artifactId>ccccregsys</artifactId>
+        <artifactId>cccmregsys</artifactId>
         <version>1.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>

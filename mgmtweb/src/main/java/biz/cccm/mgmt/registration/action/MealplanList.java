@@ -60,7 +60,7 @@ public class MealplanList extends BasePage implements Serializable {
         totalMealplan.setRegistrationID("Total");
 
         for (Registrant reg : registrants) {
-            if (reg.getAmount() > 0 && !container.contains(reg.getRegistrationID())) {
+            if ((reg.getAmount() == null || reg.getAmount() > 0 ) && !container.contains(reg.getRegistrationID())) {
                 totalMealplan.setDinner1(reg.getDinner1() + totalMealplan.getDinner1());
                 totalMealplan.setDinner2(reg.getDinner2() + totalMealplan.getDinner2());
                 totalMealplan.setDinner3(reg.getDinner3() + totalMealplan.getDinner3());
