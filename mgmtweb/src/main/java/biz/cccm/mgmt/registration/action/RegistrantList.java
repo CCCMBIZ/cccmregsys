@@ -70,7 +70,9 @@ public class RegistrantList extends BasePage implements Serializable {
                 nameTag.setEnglishFullName(reg.getFirstName() + " " + reg.getLastName());
                 nameTag.setChruchName(reg.getChurchName());
                 nameTag.setCenterId(reg.getRegistrationID());
-                nameTag.setGroupId("");
+
+                String groupID = (reg.getHealthCardNo() == null ? "" : reg.getHealthCardNo());
+                nameTag.setGroupId(groupID);
                 nameTag.setBarcodeId(String.valueOf(reg.getPersonID()));
 
                 String topic = "" ;

@@ -270,9 +270,9 @@ public class PersonForm extends BasePage implements Serializable {
 
             family = familyManager.getFamily(person.getFamilyID());
 
-            if (profile.getRegistrationID() != null && !profile.getRegistrationID().isEmpty()) {
-                log.info("Registration ID:" + profile.getRegistrationID());
-                String regId = profile.getRegistrationID();
+            if (profile.getFamilyID() > 0) {
+                log.info("Registration ID:" + profile.getFamilyID());
+                String regId = String.valueOf(profile.getFamilyID());
                 if (mealplanManager.exists(regId)) {
                     mealplan = mealplanManager.getMealplan(regId);
                 } else {
@@ -281,7 +281,7 @@ public class PersonForm extends BasePage implements Serializable {
                 }
             }
 
-            List<Payment> paymentList = paymentManager.getPaymentsByRegistrationID(Long.parseLong(profile.getRegistrationID()));
+            List<Payment> paymentList = paymentManager.getPaymentsByRegistrationID(Long.valueOf(profile.getFamilyID()));
 
             if (paymentList != null && !paymentList.isEmpty()) {
 
