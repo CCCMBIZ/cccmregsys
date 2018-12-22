@@ -11,14 +11,12 @@ import biz.cccm.webapp.action.BasePageTestCase;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Level;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.log4j.Logger;
 import org.junit.After;
 import static org.junit.Assert.assertNotNull;
@@ -108,62 +106,62 @@ public class RegistrantListTest extends BasePageTestCase {
 
         try {
             List<Registrant> registrants = new ArrayList<Registrant>();
-            registrants.addAll(registrantManager.getRegistrantByRegistrationID("1009090748"));
-            registrants.addAll(registrantManager.getRegistrantByRegistrationID("1009093117"));
-            registrants.addAll(registrantManager.getRegistrantByRegistrationID("1020174016"));
-            registrants.addAll(registrantManager.getRegistrantByRegistrationID("1020174823"));
-            registrants.addAll(registrantManager.getRegistrantByRegistrationID("1020175743"));
-            registrants.addAll(registrantManager.getRegistrantByRegistrationID("1020180252"));
-            registrants.addAll(registrantManager.getRegistrantByRegistrationID("1020180651"));
-            registrants.addAll(registrantManager.getRegistrantByRegistrationID("1020181233"));
-            registrants.addAll(registrantManager.getRegistrantByRegistrationID("1020181544"));
-            registrants.addAll(registrantManager.getRegistrantByRegistrationID("1019223657"));
-            registrants.addAll(registrantManager.getRegistrantByRegistrationID("1012174243"));
-            registrants.addAll(registrantManager.getRegistrantByRegistrationID("1104180150"));
-            registrants.addAll(registrantManager.getRegistrantByRegistrationID("1118151927"));
-            registrants.addAll(registrantManager.getRegistrantByRegistrationID("1029222406"));
-            registrants.addAll(registrantManager.getRegistrantByRegistrationID("1108132641"));
-            registrants.addAll(registrantManager.getRegistrantByRegistrationID("1031113454"));
-            registrants.addAll(registrantManager.getRegistrantByRegistrationID("1114200423"));
-            registrants.addAll(registrantManager.getRegistrantByRegistrationID("1031202615"));
-            registrants.addAll(registrantManager.getRegistrantByRegistrationID("1110152345"));
-            registrants.addAll(registrantManager.getRegistrantByRegistrationID("1128212059"));
-            registrants.addAll(registrantManager.getRegistrantByRegistrationID("1026134036"));
-            registrants.addAll(registrantManager.getRegistrantByRegistrationID("1107142855"));
-            registrants.addAll(registrantManager.getRegistrantByRegistrationID("1104082643"));
-            registrants.addAll(registrantManager.getRegistrantByRegistrationID("1025164649"));
-            registrants.addAll(registrantManager.getRegistrantByRegistrationID("1016182008"));
-            registrants.addAll(registrantManager.getRegistrantByRegistrationID("1006161748"));
-            registrants.addAll(registrantManager.getRegistrantByRegistrationID("1013212624"));
-            registrants.addAll(registrantManager.getRegistrantByRegistrationID("1114222012"));
-            registrants.addAll(registrantManager.getRegistrantByRegistrationID("1006221418"));
-            registrants.addAll(registrantManager.getRegistrantByRegistrationID("1008163320"));
-            registrants.addAll(registrantManager.getRegistrantByRegistrationID("1111162140"));
+            registrants.addAll(registrantManager.getRegistrant());
+
+            Collections.sort(registrants, new RegistrantComparator());
 
             Set<NameTag> printRequest = new LinkedHashSet<>();
             for (Registrant reg : registrants) {
-                if (reg.getAmount() != 0) {
-                    NameTag nameTag = new NameTag();
-                    if (reg.getChineseName() != null && !reg.getChineseName().isEmpty()) {
-                        nameTag.setChineseFullName(reg.getChineseName());
-                    } else {
-                        nameTag.setChineseFullName(reg.getFirstName());
-                    }
-                    log.info("Name:" + nameTag.getChineseFullName());
-                    nameTag.setEnglishFullName(reg.getFirstName() + " " + reg.getLastName());
-                    nameTag.setChruchName(reg.getChurchName());
-                    nameTag.setCenterId(reg.getRegistrationID());
-                    nameTag.setAddress(reg.getHomeCity() + "," + reg.getHomeState());
-                    nameTag.setBarcodeId(String.valueOf(reg.getPersonID()));
 
-                    if (reg.getPreferredLanguage().equalsIgnoreCase("E")) {
-                        nameTag.setGrace(true);
-                    }
-                    printRequest.add(nameTag);
+                NameTag nameTag = new NameTag();
+                nameTag.setConferenceName("二零一八基督徒大會");
+                if (reg.getChineseName() != null && !reg.getChineseName().isEmpty()) {
+                    nameTag.setChineseFullName(reg.getChineseName());
+                } else {
+                    nameTag.setChineseFullName(reg.getFirstName()) ;
                 }
+                log.info("Name:" + nameTag.getChineseFullName());
+                nameTag.setEnglishFullName(reg.getFirstName() + " " + reg.getLastName());
+                nameTag.setChruchName(reg.getChurchName());
+                nameTag.setCenterId(reg.getRegistrationID());
+
+                String groupID = (reg.getHealthCardNo() == null ? "" : reg.getHealthCardNo());
+                nameTag.setGroupId(groupID);
+                nameTag.setBarcodeId(String.valueOf(reg.getPersonID()));
+
+                String topic = "" ;
+                if (reg.getWorkshop1() != null && !reg.getWorkshop1().isEmpty()) {
+                    String[] list = reg.getWorkshop1().split("\\|");
+                    for (String w : list) {
+                        if (w != null && !w.isEmpty()) {
+                            if (!topic.isEmpty()) {
+                                topic += "," ;
+                            }
+                            topic += w ;
+                        }
+                    }
+                }
+                if (reg.getWorkshop2() != null && !reg.getWorkshop2().isEmpty()) {
+                    String[] list = reg.getWorkshop2().split("\\|");
+                    for (String s : list) {
+                        if (s!= null && !s.isEmpty()) {
+                            if (!topic.isEmpty()) {
+                                topic += ",";
+                            }
+                            topic += s ;
+                        }
+                    }
+                }
+                nameTag.setTopic(topic);
+
+                if (reg.getPreferredLanguage() != null && reg.getPreferredLanguage().equalsIgnoreCase("E")) {
+                    nameTag.setGrace(true);
+                }
+                printRequest.add(nameTag);
             }
             NameTagService nameTagService = new NameTagServiceImpl();
-            byte[] pdf = nameTagService.generateNameTagPrints(printRequest, 8);
+            byte[] pdf = nameTagService.generateNameTagPrints(printRequest, 1);
+
             FileOutputStream fileOuputStream
                     = new FileOutputStream("target/registrationNametag.pdf");
             fileOuputStream.write(pdf);
@@ -176,6 +174,17 @@ public class RegistrantListTest extends BasePageTestCase {
         }
     }
 
+
+
+    public class RegistrantComparator implements Comparator<Registrant> {
+
+        @Override
+        public int compare(Registrant o1, Registrant o2) {
+            return new CompareToBuilder()
+                    .append(o1.getLastName(), o2.getLastName())
+                    .append(o1.getFirstName(), o2.getFirstName()).toComparison();
+        }
+    }
     /**
      * Test of search method, of class RegistrantList.
      */
