@@ -119,7 +119,7 @@ public class RegistrantForm extends BasePage implements Serializable {
 
         try {
             if (this.registrant != null && !this.registrant.getRegistrationID().isEmpty()) {
-                paymentList = paymentManager.getPaymentsByRegistrationID(Long.parseLong(this.registrant.getRegistrationID()));
+                paymentList = paymentManager.getPaymentsByRegistrationID(Long.valueOf(this.registrant.getFamilyID()));
 
                 payments = new Payment[paymentList.size()];
 

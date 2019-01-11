@@ -480,7 +480,7 @@ public class PersonForm extends BasePage implements Serializable {
             }
 
             // Mealplan
-            Mealplan existingMealplan = mealplanManager.getMealplan(profile.getRegistrationID());
+            Mealplan existingMealplan = mealplanManager.getMealplan(String.valueOf(profile.getFamilyID()));
             if (existingMealplan == null || !mealplan.equals(existingMealplan)) {
                 mealplanManager.saveMealplan(mealplan);
 
@@ -565,7 +565,7 @@ public class PersonForm extends BasePage implements Serializable {
 
         // >>>>>>>>>>>>>>>>>>>>> Meal fee >>>>>>>>>>>>>>>>>>>>>     
         Double breakfastFee = 5.0;
-        Double lunchFee = 6.0;
+        Double lunchFee = 7.0;
         Double dinnerFee = 9.0;
 
         Integer breakfastCount = (mp.getBreakfast1() != null ? mp.getBreakfast1() : 0)

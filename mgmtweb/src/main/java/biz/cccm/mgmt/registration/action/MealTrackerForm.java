@@ -67,15 +67,15 @@ public class MealTrackerForm extends BasePage implements Serializable {
                 Registrant registrant = registrantManager.getRegistrantByPersonID(searchNmber);
 
                 Date now = new Date();
-                Date firstDayDinner = new GregorianCalendar(2016, Calendar.DECEMBER, 12, 16, 00).getTime();
-                Date secondDayBreakfast = new GregorianCalendar(2016, Calendar.DECEMBER, 29, 4, 0).getTime();
-                Date secondDayLunch = new GregorianCalendar(2016, Calendar.DECEMBER, 29, 10, 0).getTime();
-                Date secondDayDinner = new GregorianCalendar(2016, Calendar.DECEMBER, 29, 16, 0).getTime();
-                Date thirdDayBreakfast = new GregorianCalendar(2016, Calendar.DECEMBER, 30, 4, 0).getTime();
-                Date thirdDayLunch = new GregorianCalendar(2016, Calendar.DECEMBER, 30, 10, 0).getTime();
-                Date thirdDayDinner = new GregorianCalendar(2016, Calendar.DECEMBER, 30, 16, 0).getTime();
-                Date fourthDayBreakfast = new GregorianCalendar(2016, Calendar.DECEMBER, 31, 4, 0).getTime();
-                Date fourthDayLunch = new GregorianCalendar(2016, Calendar.DECEMBER, 31, 10, 0).getTime();
+                Date firstDayDinner = new GregorianCalendar(2018, Calendar.DECEMBER, 12, 16, 00).getTime();
+                Date secondDayBreakfast = new GregorianCalendar(2018, Calendar.DECEMBER, 29, 4, 0).getTime();
+                Date secondDayLunch = new GregorianCalendar(2018, Calendar.DECEMBER, 29, 10, 0).getTime();
+                Date secondDayDinner = new GregorianCalendar(2018, Calendar.DECEMBER, 29, 16, 0).getTime();
+                Date thirdDayBreakfast = new GregorianCalendar(2018, Calendar.DECEMBER, 30, 4, 0).getTime();
+                Date thirdDayLunch = new GregorianCalendar(2018, Calendar.DECEMBER, 30, 10, 0).getTime();
+                Date thirdDayDinner = new GregorianCalendar(2018, Calendar.DECEMBER, 30, 16, 0).getTime();
+                Date fourthDayBreakfast = new GregorianCalendar(2018, Calendar.DECEMBER, 31, 4, 0).getTime();
+                Date fourthDayLunch = new GregorianCalendar(2018, Calendar.DECEMBER, 31, 10, 0).getTime();
 //
 //                Date firstDayDinner = new GregorianCalendar(2015, Calendar.DECEMBER, 12, 16, 00).getTime();
 //                Date secondDayBreakfast = new GregorianCalendar(2015, Calendar.DECEMBER, 26, 17, 0).getTime();
@@ -92,7 +92,7 @@ public class MealTrackerForm extends BasePage implements Serializable {
 
                 Mealtracker mt = new Mealtracker();
                 mt.setPersonID(registrant.getPersonID());
-                mt.setRegistrationID(registrant.getRegistrationID());
+                mt.setRegistrationID(String.valueOf(registrant.getFamilyID()));
                 mt.setLastModified(now);
 
                 String name = null;
@@ -167,7 +167,7 @@ public class MealTrackerForm extends BasePage implements Serializable {
 
 //                mealtrackers = mealtrackerManager.search(registrant.getRegistrationID());
                 try {
-                    mealtrackers = mealtrackerManager.getMealtrackerListByRegistrationIDAndMealType(registrant.getRegistrationID(), caption);
+                    mealtrackers = mealtrackerManager.getMealtrackerListByRegistrationIDAndMealType(String.valueOf(registrant.getFamilyID()), caption);
                 } catch (NonexistentEntityException ex) {
                     log.error(ex);
                 }
